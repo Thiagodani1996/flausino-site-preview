@@ -1,0 +1,189 @@
+/* site/assets/css/paginas.css */
+.hero { position: relative; min-height: 88vh; display: grid; align-items: end; overflow: hidden; }
+.hero__video {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+}
+.hero__veu {
+  position: absolute; inset: 0; z-index: 1;
+  /* O conteúdo fica ancorado embaixo, então a metade inferior precisa ser
+     opaca o bastante para o texto passar em AA contra QUALQUER frame do vídeo,
+     não só contra a média. O pôr do sol tem frames muito claros. */
+  background: linear-gradient(to top,
+    rgba(36,53,42,0.78) 0%,
+    rgba(36,53,42,0.76) 65%,
+    rgba(36,53,42,0.56) 85%,
+    rgba(36,53,42,0.32) 100%);
+}
+.hero__conteudo { position: relative; z-index: 2; color: var(--branco); padding-block: var(--e-10); }
+.hero__conteudo .corpo { color: var(--pergaminho); margin-block: var(--e-3); }
+/* Branco, não terracota. Sobre imagem em movimento a luminância do fundo é
+   imprevisível e a posição do rótulo dentro do gradiente muda continuamente com
+   a largura da janela — qualquer cor de meio-tom passa em algumas larguras e
+   falha em outras. O acento terracota continua nas superfícies planas, onde o
+   teste de tokens verifica o contraste de forma determinística. */
+.hero__conteudo .rotulo { color: var(--branco); }
+.hero__scroll {
+  position: absolute; left: var(--e-3); bottom: var(--e-3); z-index: 2;
+  color: var(--branco); font-size: var(--texto-legenda);
+  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+}
+/* Controle de pausa do vídeo do hero — WCAG 2.2.2: conteúdo em movimento que
+   começa sozinho precisa de um jeito de parar. Fica discreto de propósito:
+   canto oposto ao rótulo "Role", pill pequeno (padding e texto reduzidos em
+   relação ao .pill padrão) para não competir com o título. Herda de .pill/
+   .pill--claro — vazado, sem preenchimento, mesmo hover/foco do resto do
+   site — só o tamanho muda aqui. */
+.hero__controle {
+  position: absolute; right: var(--e-3); bottom: var(--e-3); z-index: 2;
+  padding: 8px 18px; font-size: var(--texto-legenda);
+}
+
+.etapas { list-style: none; margin: var(--e-4) 0 0; padding: 0; display: grid; gap: 0; }
+.etapas li { padding-block: var(--e-3); border-top: var(--filete); }
+.etapas li span {
+  display: block; font-size: var(--texto-legenda); color: var(--terracota-texto);
+  letter-spacing: var(--espaco-caixa-alta); margin-bottom: var(--e-1);
+}
+@media (min-width: 900px) { .etapas { grid-template-columns: repeat(4, 1fr); gap: var(--e-4); } }
+
+.ficha-resumo {
+  list-style: none; padding: 0; margin: var(--e-3) 0;
+  display: flex; flex-wrap: wrap; gap: var(--e-3);
+  font-size: var(--texto-rotulo); color: var(--cinza-texto);
+}
+.legenda-estudo {
+  margin-top: var(--e-1); font-size: var(--texto-legenda);
+  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+  color: var(--cinza-texto);
+}
+.video-apresentacao { width: 100%; max-width: 720px; margin-top: var(--e-3); }
+.centralizado { text-align: center; }
+.centralizado .grupo-pills { justify-content: center; margin-top: var(--e-3); }
+
+/* --- Catálogo ----------------------------------------------------------- */
+.filtros {
+  display: flex; flex-wrap: wrap; gap: var(--e-3); align-items: end;
+  margin-block: var(--e-4);
+  padding-block: var(--e-3);
+  border-top: var(--filete); border-bottom: var(--filete);
+}
+.filtros label {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: var(--texto-legenda); text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta); color: var(--cinza-texto);
+}
+.filtros select {
+  font-family: var(--fonte-sans); font-size: var(--texto-corpo);
+  color: var(--verde-serra); background: transparent;
+  border: 0; border-bottom: 1px solid var(--verde-serra);
+  padding: 6px 0; min-width: 190px;
+}
+.filtros__contador { margin-left: auto; font-size: var(--texto-rotulo); color: var(--cinza-texto); }
+.catalogo { display: grid; gap: var(--e-4); grid-template-columns: 1fr; }
+@media (min-width: 640px) { .catalogo { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .catalogo { grid-template-columns: repeat(3, 1fr); } }
+.catalogo__vazio { padding-block: var(--e-6); }
+.catalogo__vazio .pill { margin-top: var(--e-3); }
+
+/* --- Página de modelo --------------------------------------------------- */
+.galeria { padding-bottom: var(--secao-y); }
+.galeria__principal { margin: 0; }
+.galeria__principal img { width: 100%; max-height: 78vh; object-fit: cover; }
+.galeria__principal figcaption { max-width: var(--largura-max); margin: var(--e-1) auto 0; padding: 0 var(--e-3); }
+.galeria__miniaturas {
+  display: flex; gap: var(--e-1); overflow-x: auto;
+  max-width: var(--largura-max); margin: var(--e-2) auto 0; padding: 0 var(--e-3);
+}
+.miniatura { flex: 0 0 108px; padding: 0; border: 1.5px solid transparent; background: none; cursor: pointer; }
+.miniatura[aria-current="true"] { border-color: var(--terracota); }
+.miniatura img { width: 108px; height: 72px; object-fit: cover; }
+
+.ficha { display: grid; gap: 0; grid-template-columns: 1fr; margin-top: var(--e-4); }
+@media (min-width: 700px) { .ficha { grid-template-columns: repeat(3, 1fr); column-gap: var(--e-4); } }
+.ficha > div { display: flex; justify-content: space-between; gap: var(--e-2);
+  padding-block: var(--e-2); border-top: var(--filete); }
+.ficha dt { font-size: var(--texto-rotulo); color: var(--cinza-texto); margin: 0; }
+.ficha dd { margin: 0; font-weight: 600; }
+
+.planta { margin: var(--e-4) 0 0; }
+/* height: auto é necessário aqui: os atributos width/height do HTML (usados
+   para reservar espaço e evitar layout shift) fixam uma altura absoluta que
+   sobrevive mesmo com width:100%, distorcendo a planta ao esticá-la para uma
+   caixa estreita e alta. Sem esta linha a imagem perde a proporção. */
+.planta img { width: 100%; height: auto; background: var(--pergaminho); }
+
+.ambientes { list-style: none; padding: 0; margin: var(--e-4) 0 0; display: grid; gap: var(--e-4); }
+@media (min-width: 800px) { .ambientes { grid-template-columns: repeat(2, 1fr); } }
+
+.lista-filete { list-style: none; padding: 0; margin: var(--e-3) 0 0; }
+.lista-filete li { padding-block: var(--e-2); border-top: var(--filete); }
+.secao--escura .lista-filete li { border-top: var(--filete-escuro); }
+
+.nota-tecnica { font-size: var(--texto-legenda); color: var(--cinza-texto); max-width: 76ch; }
+.video-ambiente { width: 100%; margin-top: var(--e-3); aspect-ratio: 16 / 9; object-fit: cover; }
+
+/* --- Linha do tempo e pilares ------------------------------------------- */
+.linha-tempo { list-style: none; padding: 0; margin: 0; counter-reset: etapa; }
+.linha-tempo li {
+  position: relative; padding: var(--e-4) 0 var(--e-4) var(--e-6);
+  border-top: var(--filete);
+}
+.linha-tempo li::before {
+  content: ''; position: absolute; left: 10px; top: var(--e-4); bottom: 0;
+  width: 1px; background: var(--cinza-pedra);
+}
+.linha-tempo li:last-child::before { display: none; }
+.linha-tempo__numero {
+  position: absolute; left: 0; top: var(--e-4);
+  width: 21px; height: 21px; border-radius: 50%;
+  border: 1.5px solid var(--terracota); background: var(--pergaminho);
+  display: grid; place-items: center;
+  font-size: 10px; color: var(--terracota-texto); letter-spacing: 0;
+}
+.pilares { display: grid; gap: var(--e-4); margin-top: var(--e-4); grid-template-columns: 1fr; }
+@media (min-width: 860px) { .pilares { grid-template-columns: repeat(3, 1fr); } }
+.pilares > div { padding-top: var(--e-3); border-top: var(--filete); }
+
+/* --- Simulador ---------------------------------------------------------- */
+.simulador { display: grid; gap: var(--e-6); margin-block: var(--e-4); grid-template-columns: 1fr; }
+@media (min-width: 900px) { .simulador { grid-template-columns: 1fr 1fr; gap: var(--e-8); } }
+.simulador__campos { display: grid; gap: var(--e-3); }
+.simulador__campos label {
+  display: flex; flex-direction: column; gap: var(--e-1);
+  font-size: var(--texto-legenda); text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta); color: var(--cinza-texto);
+}
+.simulador__campos input[type="number"] {
+  font-family: var(--fonte-sans); font-size: var(--texto-corpo-g); color: var(--verde-serra);
+  background: transparent; border: 0; border-bottom: 1px solid var(--verde-serra);
+  padding: 6px 0; letter-spacing: normal; text-transform: none;
+}
+.simulador__campos input[type="range"] { accent-color: var(--verde-serra); }
+.simulador__saida { display: grid; gap: 0; align-content: start; }
+.simulador__saida > div { padding-block: var(--e-2); border-top: var(--filete); }
+.simulador__saida strong {
+  display: block; font-family: var(--fonte-serif); font-size: var(--texto-titulo);
+  font-weight: 500;
+}
+
+/* --- Formulário --------------------------------------------------------- */
+.formulario { display: grid; gap: var(--e-3); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .formulario { grid-template-columns: 1fr 1fr; gap: var(--e-3) var(--e-4); } }
+.formulario__largo { grid-column: 1 / -1; }
+.formulario label {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: var(--texto-legenda); text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta); color: var(--cinza-texto);
+}
+.formulario input, .formulario select, .formulario textarea {
+  font-family: var(--fonte-sans); font-size: var(--texto-corpo);
+  color: var(--verde-serra); background: transparent;
+  border: 0; border-bottom: 1px solid var(--verde-serra);
+  padding: 8px 0; letter-spacing: normal; text-transform: none;
+}
+.formulario textarea { border: 1px solid var(--verde-serra); border-radius: var(--raio-link); padding: var(--e-2); }
+.formulario [aria-invalid="true"] { border-color: var(--terracota-texto); }
+.erro { color: var(--terracota-texto); font-size: var(--texto-legenda); text-transform: none; letter-spacing: normal; }
+.formulario__estado { margin-top: var(--e-2); font-size: var(--texto-rotulo); color: var(--verde-serra); }
+.formulario__armadilha { position: absolute; left: -9999px; }

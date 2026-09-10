@@ -1,0 +1,76 @@
+/* site/assets/css/base.css */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--fonte-sans);
+  font-weight: 400;
+  font-size: var(--texto-corpo);
+  line-height: var(--altura-corpo);
+  color: var(--verde-serra);
+  background: var(--branco);
+}
+/* height: auto é obrigatório: as imagens carregam os atributos width/height do
+   HTML (que evitam layout shift), e sem isto o max-width encolhe só a largura
+   enquanto a altura fica travada no atributo — a imagem sai esmagada. */
+img { max-width: 100%; height: auto; display: block; }
+video { max-width: 100%; display: block; }
+a { color: inherit; }
+
+h1, h2, h3 {
+  font-family: var(--fonte-serif);
+  font-weight: 500;
+  line-height: var(--altura-display);
+  margin: 0;
+}
+p { margin: 0; }
+
+.envelope { width: 100%; max-width: var(--largura-max); margin: 0 auto; padding: 0 var(--e-3); }
+.secao { padding-block: var(--secao-y); }
+.secao--pergaminho { background: var(--pergaminho); }
+.secao--escura { background: var(--verde-serra); color: var(--branco); }
+.secao--escura .corpo { color: var(--pergaminho); }
+
+.titulo-display { font-size: clamp(2.25rem, 6vw, var(--texto-display-g)); }
+.titulo         { font-size: clamp(1.75rem, 4vw, var(--texto-titulo-g)); }
+.titulo-p       { font-size: var(--texto-titulo); }
+
+.corpo { font-size: var(--texto-corpo); color: var(--cinza-texto); max-width: 56ch; }
+.secao--escura .corpo { color: var(--pergaminho); }
+
+/* Os títulos têm margin 0 de propósito — o ritmo é controlado aqui, não herdado
+   do navegador. Sem estas regras o parágrafo encosta no título. */
+h1 + .corpo, h2 + .corpo { margin-top: var(--e-3); }
+h3 + .corpo { margin-top: var(--e-1); }
+
+.rotulo {
+  display: block;
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta);
+  color: var(--terracota-texto);
+  margin-bottom: var(--e-2);
+}
+.secao--escura .rotulo { color: var(--terracota-claro); }
+
+.duas-colunas {
+  display: grid; gap: var(--e-6);
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .duas-colunas { grid-template-columns: 1fr 1fr; gap: var(--e-8); }
+  .duas-colunas--invertida > :first-child { order: 2; }
+}
+
+.filete { border: 0; border-top: var(--filete); margin: 0; }
+.secao--escura .filete { border-top: var(--filete-escuro); }
+
+.pular-para-conteudo {
+  position: absolute; left: -9999px;
+  background: var(--verde-serra); color: var(--branco); padding: var(--e-2);
+}
+.pular-para-conteudo:focus { left: var(--e-2); top: var(--e-2); z-index: 100; }
+
+:focus-visible { outline: 2px solid var(--terracota); outline-offset: 3px; }

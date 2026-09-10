@@ -1,0 +1,122 @@
+/* site/assets/css/componentes.css */
+
+/* --- Pill: o único formato de CTA do site. Sempre vazado. --------------- */
+.pill {
+  display: inline-block;
+  background: transparent;
+  border: 1.5px solid var(--verde-serra);
+  border-radius: var(--raio-pill);
+  color: var(--verde-serra);
+  font-family: var(--fonte-sans);
+  font-size: var(--texto-rotulo);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta);
+  text-decoration: none;
+  padding: 14px 28px;
+  cursor: pointer;
+  transition: background var(--transicao), color var(--transicao);
+}
+.pill:hover, .pill:focus-visible { background: var(--verde-serra); color: var(--branco); }
+
+.pill--claro { border-color: var(--branco); color: var(--branco); }
+.pill--claro:hover, .pill--claro:focus-visible { background: var(--branco); color: var(--verde-serra); }
+
+.grupo-pills { display: flex; flex-wrap: wrap; gap: var(--e-2); }
+
+/* --- Cabeçalho ---------------------------------------------------------- */
+.cabecalho {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--branco);
+  border-bottom: var(--filete);
+  transition: padding var(--transicao);
+}
+.cabecalho__interno {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--e-3); padding-block: var(--e-2);
+}
+.cabecalho--compacto .cabecalho__interno { padding-block: 6px; }
+.cabecalho__marca { text-decoration: none; display: flex; align-items: baseline; gap: 8px; }
+.marca__nome {
+  font-family: var(--fonte-serif); font-size: var(--texto-titulo-p);
+  font-weight: 700; color: var(--verde-serra); line-height: 1;
+}
+.marca__sufixo {
+  font-size: var(--texto-legenda); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.3em; color: var(--terracota-texto);
+}
+.rodape .marca__nome { color: var(--branco); }
+.rodape .marca__sufixo { color: var(--terracota-claro); }
+.navegacao { display: none; gap: var(--e-3); align-items: center; }
+@media (min-width: 960px) { .navegacao { display: flex; } }
+.navegacao a {
+  font-size: var(--texto-rotulo); font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+  text-decoration: none; color: var(--cinza-texto);
+  transition: color var(--transicao);
+}
+.navegacao a:hover, .navegacao a[aria-current="page"] { color: var(--verde-serra); }
+
+.menu-botao {
+  background: transparent; border: 0; padding: var(--e-1);
+  font-size: var(--texto-rotulo); font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+  color: var(--verde-serra); cursor: pointer;
+}
+@media (min-width: 960px) { .menu-botao { display: none; } }
+.menu-movel { display: none; border-top: var(--filete); padding-block: var(--e-3); }
+/* Só abre abaixo do breakpoint. Sem o media query, um menu deixado aberto no
+   celular reaparece empilhado sob a nav de desktop ao redimensionar a janela. */
+@media (max-width: 959px) {
+  .menu-movel[data-aberto="true"] { display: block; }
+}
+.menu-movel a { display: block; padding: var(--e-2) 0; text-decoration: none; }
+
+/* --- Card de modelo ----------------------------------------------------- */
+.card { display: flex; flex-direction: column; gap: var(--e-2); text-decoration: none; }
+.card__figura { overflow: hidden; background: var(--pergaminho); aspect-ratio: 3 / 2; }
+.card__figura img { width: 100%; height: 100%; object-fit: cover; transition: transform 600ms ease; }
+.card:hover .card__figura img { transform: scale(1.04); }
+.card__nome { font-family: var(--fonte-serif); font-size: var(--texto-titulo); }
+.card__specs {
+  display: flex; flex-wrap: wrap; gap: var(--e-2);
+  font-size: var(--texto-legenda); text-transform: uppercase;
+  letter-spacing: var(--espaco-caixa-alta); color: var(--cinza-texto);
+}
+.card__preco { font-size: var(--texto-rotulo); color: var(--verde-serra); }
+
+.card--aberto .card__figura {
+  display: grid; place-items: center;
+  border: 1px dashed var(--cinza-pedra); background: var(--pergaminho);
+}
+.card--aberto .card__figura img { width: 96px; height: auto; object-fit: contain; }
+.card__etiqueta {
+  font-size: var(--texto-legenda); font-weight: 600;
+  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+  color: var(--terracota-texto);
+}
+
+/* --- Rodapé ------------------------------------------------------------- */
+.rodape { background: var(--verde-serra); color: var(--pergaminho); padding-block: var(--e-8); }
+/* inline-block + padding: cada link do rodapé fica numa linha (separados por
+   <br>) com ~22px de altura — abaixo do alvo de toque mínimo de 24px. */
+.rodape a { color: var(--pergaminho); display: inline-block; padding-block: 4px; }
+/* display:inline-block acima tem mais especificidade que o display:none do
+   atributo [hidden] no stylesheet do navegador — sem isso, um link ainda sem
+   dado real (ver main.js/preencherContato) voltaria a ficar visível/focável
+   vazio. */
+.rodape a[hidden] { display: none; }
+/* .corpo por padrão usa --cinza-texto (pensado para fundo claro — 5,72:1 lá).
+   Sobre o verde-serra do rodapé isso cai para ~2,3:1. Mesmo padrão de
+   .hero__conteudo .corpo: reescreve para a cor clara já usada no rodapé. */
+.rodape .corpo { color: var(--pergaminho); }
+.rodape__grade { display: grid; gap: var(--e-4); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .rodape__grade { grid-template-columns: 2fr 1fr 1fr; } }
+.rodape__nota {
+  margin-top: var(--e-6); padding-top: var(--e-3);
+  border-top: var(--filete-escuro);
+  /* --cinza-pedra é "texto >= 24px" (3:1) — errado aqui, que é legenda
+     pequena. --terracota-claro é o tom pequeno já testado a 5,72:1 sobre
+     verde-serra (mesmo par usado em .secao--escura .rotulo). */
+  font-size: var(--texto-legenda); color: var(--terracota-claro);
+}

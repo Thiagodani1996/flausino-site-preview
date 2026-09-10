@@ -1,0 +1,41 @@
+/* site/assets/css/animacoes.css */
+
+/* A ocultação só vale quando o JavaScript está vivo: a <html> nasce com
+   class="sem-js" e um script no <head> troca para "com-js". Sem isso, JS
+   bloqueado ou quebrado deixaria seções inteiras invisíveis, sem erro visível
+   para o visitante nem para o dono. */
+.com-js [data-revelar] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 700ms cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform 700ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.com-js [data-revelar][data-visivel="true"] { opacity: 1; transform: none; }
+
+/* Escalonamento entre irmãos: cada item entra 90ms depois do anterior */
+.com-js [data-revelar][data-atraso="1"] { transition-delay: 90ms; }
+.com-js [data-revelar][data-atraso="2"] { transition-delay: 180ms; }
+.com-js [data-revelar][data-atraso="3"] { transition-delay: 270ms; }
+.com-js [data-revelar][data-atraso="4"] { transition-delay: 360ms; }
+
+/* Parallax leve em fotos de seção */
+[data-parallax] { will-change: transform; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* prefers-reduced-motion pede para tirar MOVIMENTO — translação, parallax,
+     zoom — não para apagar toda a animação. Opacidade não é movimento, então
+     [data-revelar] continua surgindo com um fade suave; só o componente de
+     translateY(18px) some. Especificidade maior que a regra `*` acima
+     garante que este transition (e não o de 0.001ms) vale para este seletor. */
+  .com-js [data-revelar] {
+    transform: none !important;
+    transition: opacity 400ms ease !important;
+  }
+  [data-parallax] { transform: none !important; }
+}
