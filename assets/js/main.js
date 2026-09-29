@@ -152,10 +152,31 @@
     }));
     var temporizador = null;
 
+    var legenda = document.querySelector('[data-legenda-hero]');
+    var saindo = null;
+
+    // A legenda some, troca de texto e link, e volta — junto com a foto.
+    function trocarLegenda(slide) {
+      if (!legenda || !slide.dataset.legenda) return;
+      legenda.setAttribute('data-trocando', '');
+      window.setTimeout(function () {
+        legenda.textContent = slide.dataset.legenda;
+        if (slide.dataset.link) legenda.setAttribute('href', slide.dataset.link);
+        legenda.removeAttribute('data-trocando');
+      }, 400);
+    }
+
     function avancar() {
-      slides[indiceAtivo].classList.remove('hero__slide--ativo');
+      // O slide que sai continua a aproximação lenta até sumir (ver
+      // hero__slide--saindo em paginas.css); sem isso ele voltaria ao
+      // tamanho original no meio do crossfade.
+      if (saindo) saindo.classList.remove('hero__slide--saindo');
+      saindo = slides[indiceAtivo];
+      saindo.classList.add('hero__slide--saindo');
+      saindo.classList.remove('hero__slide--ativo');
       indiceAtivo = (indiceAtivo + 1) % slides.length;
       slides[indiceAtivo].classList.add('hero__slide--ativo');
+      trocarLegenda(slides[indiceAtivo]);
     }
 
     function iniciar() {

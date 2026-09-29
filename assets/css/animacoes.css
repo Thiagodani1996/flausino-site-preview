@@ -71,4 +71,6 @@ html.lenis, html.lenis body { height: auto; }
   /* Mesmo raciocínio para o crossfade do hero: é só opacidade, então continua.
      As fotos são decorativas e nenhuma informação depende delas. */
   html:not(.movimento-forcado) .hero__slide { transition: opacity 1200ms ease !important; }
+  /* A aproximação lenta das fotos do hero é zoom: sai por inteiro. */
+  html:not(.movimento-forcado) .hero__slide img { animation: none !important; }
 }

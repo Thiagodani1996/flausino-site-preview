@@ -63,51 +63,51 @@
 
   <main id="conteudo" tabindex="-1">
     <section class="hero">
-      <!-- Slideshow de fotos, não vídeo: 5 slides que alternam os três
-           modelos e entardecer/dia, todos na mesma proporção 3:2 (1800×1200,
-           e 1536×1024 no Horizonte, cuja fonte é menor) para não haver salto
-           de enquadramento ao trocar — ver
-           tools/otimizar-midia.mjs. Sem JavaScript, só o primeiro <picture>
-           (com hero__slide--ativo, opacidade 1 por CSS puro, sem depender de
-           com-js) aparece; os outros ficam com opacidade 0 para sempre, o
-           que é o comportamento são de um slideshow que nunca troca. Com
-           JavaScript, site/assets/js/main.js (slideshowHero) alterna a
-           classe hero__slide--ativo entre eles em looping. -->
+      <!-- Hero em foto de tela cheia (referências: BelArosa, Aman): foto clara,
+           texto centralizado, um botão principal. Slideshow de 5 fotos na
+           mesma proporção 3:2 — ver tools/otimizar-midia.mjs. Sem JavaScript,
+           só o primeiro <picture> (hero__slide--ativo, opacidade 1 por CSS
+           puro) aparece e a legenda já nasce com o modelo dele. Com
+           JavaScript, main.js (slideshowHero) alterna as fotos e troca a
+           legenda com data-legenda/data-link de cada slide.
+           --foco: ponto preso quando sobra corte em cima/embaixo (tela larga).
+           --foco-m: ponto preso quando sobra corte nos lados (tela em pé). -->
       <div class="hero__slides" aria-hidden="true" data-slideshow-hero>
-        <picture class="hero__slide hero__slide--ativo">
+        <picture class="hero__slide hero__slide--ativo" data-legenda="Modelo Mirante · A-frame · 65 m²" data-link="modelos/mirante.html">
           <source srcset="assets/img/hero/mirante-entardecer.webp" type="image/webp">
-          <img style="--foco: 50% 0%" src="assets/img/hero/mirante-entardecer.jpg" width="1800" height="1200"
+          <img style="--foco: 50% 0%; --foco-m: 45% 50%" src="assets/img/hero/mirante-entardecer.jpg" width="1800" height="1200"
                fetchpriority="high" alt="">
         </picture>
-        <picture class="hero__slide">
+        <picture class="hero__slide" data-legenda="Modelo Bosque · A-frame compacto" data-link="modelos/bosque.html">
           <source srcset="assets/img/hero/bosque-entardecer.webp" type="image/webp">
-          <img style="--foco: 50% 6%" src="assets/img/hero/bosque-entardecer.jpg" width="1800" height="1200" alt="">
+          <img style="--foco: 50% 6%; --foco-m: 50% 50%" src="assets/img/hero/bosque-entardecer.jpg" width="1800" height="1200" alt="">
         </picture>
-        <picture class="hero__slide">
+        <picture class="hero__slide" data-legenda="Modelo Horizonte · Cabana térrea · 38,88 m²" data-link="modelos/horizonte.html">
           <source srcset="assets/img/hero/horizonte-fachada.webp" type="image/webp">
-          <img style="--foco: 50% 50%" src="assets/img/hero/horizonte-fachada.jpg" width="1536" height="1024" alt="">
+          <img style="--foco: 50% 50%; --foco-m: 52% 50%" src="assets/img/hero/horizonte-fachada.jpg" width="1536" height="1024" alt="">
         </picture>
-        <picture class="hero__slide">
+        <picture class="hero__slide" data-legenda="Modelo Mirante · A-frame · 65 m²" data-link="modelos/mirante.html">
           <source srcset="assets/img/hero/mirante-dia.webp" type="image/webp">
-          <img style="--foco: 50% 4%" src="assets/img/hero/mirante-dia.jpg" width="1800" height="1200" alt="">
+          <img style="--foco: 50% 4%; --foco-m: 62% 50%" src="assets/img/hero/mirante-dia.jpg" width="1800" height="1200" alt="">
         </picture>
-        <picture class="hero__slide">
+        <picture class="hero__slide" data-legenda="Modelo Bosque · A-frame compacto" data-link="modelos/bosque.html">
           <source srcset="assets/img/hero/bosque-lateral.webp" type="image/webp">
-          <img style="--foco: 50% 4%" src="assets/img/hero/bosque-lateral.jpg" width="1800" height="1200" alt="">
+          <img style="--foco: 50% 4%; --foco-m: 60% 50%" src="assets/img/hero/bosque-lateral.jpg" width="1800" height="1200" alt="">
         </picture>
       </div>
       <div class="hero__veu"></div>
       <div class="envelope hero__conteudo">
-        <span class="rotulo">Chalés chave na mão</span>
-        <h1 class="titulo-display">Seu chalé, do projeto à entrega das chaves.</h1>
-        <p class="corpo">Desenvolvemos o projeto, executamos a construção e entregamos
+        <span class="rotulo" data-entrada>Chalés chave na mão</span>
+        <h1 class="titulo-display hero__titulo" data-entrada>Seu chalé, do projeto à entrega das chaves.</h1>
+        <p class="corpo" data-entrada>Desenvolvemos o projeto, executamos a construção e entregamos
           seu chalé completo, pronto para morar, receber hóspedes ou gerar renda.</p>
-        <div class="grupo-pills">
+        <div class="hero__acoes" data-entrada>
           <a class="pill pill--claro" href="projetos.html">Conhecer projetos</a>
-          <a class="pill pill--claro" href="orcamento.html">Solicitar orçamento</a>
+          <a class="hero__link" href="orcamento.html">Solicitar orçamento</a>
         </div>
       </div>
       <span class="hero__scroll" aria-hidden="true">Role</span>
+      <a class="hero__legenda" href="modelos/mirante.html" data-legenda-hero>Modelo Mirante · A-frame · 65 m²</a>
     </section>
 
     <section class="secao secao--pergaminho">
