@@ -27,7 +27,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/componentes.css">
@@ -37,7 +37,7 @@
 <body>
   <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="cabecalho">
+  <header class="cabecalho cabecalho--sobre-foto">
     <div class="envelope cabecalho__interno">
       <a class="cabecalho__marca" href="index.html" aria-label="Flausino Projetos — início">
         <span class="marca__nome">Flausino</span>
@@ -63,51 +63,57 @@
 
   <main id="conteudo" tabindex="-1">
     <section class="hero">
-      <!-- Hero em foto de tela cheia (referências: BelArosa, Aman): foto clara,
-           texto centralizado, um botão principal. Slideshow de 5 fotos na
-           mesma proporção 3:2 — ver tools/otimizar-midia.mjs. Sem JavaScript,
-           só o primeiro <picture> (hero__slide--ativo, opacidade 1 por CSS
-           puro) aparece e a legenda já nasce com o modelo dele. Com
-           JavaScript, main.js (slideshowHero) alterna as fotos e troca a
-           legenda com data-legenda/data-link de cada slide.
+      <!-- Hero minimalista (referência: ecomorada.com.br): foto em tela cheia
+           indo até o topo — o cabeçalho fica transparente por cima dela, ver
+           cabecalho--sobre-foto em componentes.css — e, no centro, só a marca.
+           A frase, o texto e os botões ficam na seção logo abaixo.
+           Slideshow: 5 fotos 3:2 (tools/otimizar-midia.mjs). Sem JavaScript
+           só a primeira aparece; com ele, main.js (slideshowHero) alterna.
            --foco: ponto preso quando sobra corte em cima/embaixo (tela larga).
            --foco-m: ponto preso quando sobra corte nos lados (tela em pé). -->
       <div class="hero__slides" aria-hidden="true" data-slideshow-hero>
-        <picture class="hero__slide hero__slide--ativo" data-legenda="Modelo Mirante · A-frame · 65 m²" data-link="modelos/mirante.html">
+        <picture class="hero__slide hero__slide--ativo">
           <source srcset="assets/img/hero/mirante-entardecer.webp" type="image/webp">
           <img style="--foco: 50% 0%; --foco-m: 45% 50%" src="assets/img/hero/mirante-entardecer.jpg" width="1800" height="1200"
                fetchpriority="high" alt="">
         </picture>
-        <picture class="hero__slide" data-legenda="Modelo Bosque · A-frame compacto" data-link="modelos/bosque.html">
+        <picture class="hero__slide">
           <source srcset="assets/img/hero/bosque-entardecer.webp" type="image/webp">
           <img style="--foco: 50% 6%; --foco-m: 50% 50%" src="assets/img/hero/bosque-entardecer.jpg" width="1800" height="1200" alt="">
         </picture>
-        <picture class="hero__slide" data-legenda="Modelo Horizonte · Cabana térrea · 38,88 m²" data-link="modelos/horizonte.html">
+        <picture class="hero__slide">
           <source srcset="assets/img/hero/horizonte-fachada.webp" type="image/webp">
           <img style="--foco: 50% 50%; --foco-m: 52% 50%" src="assets/img/hero/horizonte-fachada.jpg" width="1536" height="1024" alt="">
         </picture>
-        <picture class="hero__slide" data-legenda="Modelo Mirante · A-frame · 65 m²" data-link="modelos/mirante.html">
+        <picture class="hero__slide">
           <source srcset="assets/img/hero/mirante-dia.webp" type="image/webp">
           <img style="--foco: 50% 4%; --foco-m: 62% 50%" src="assets/img/hero/mirante-dia.jpg" width="1800" height="1200" alt="">
         </picture>
-        <picture class="hero__slide" data-legenda="Modelo Bosque · A-frame compacto" data-link="modelos/bosque.html">
+        <picture class="hero__slide">
           <source srcset="assets/img/hero/bosque-lateral.webp" type="image/webp">
           <img style="--foco: 50% 4%; --foco-m: 60% 50%" src="assets/img/hero/bosque-lateral.jpg" width="1800" height="1200" alt="">
         </picture>
       </div>
       <div class="hero__veu"></div>
-      <div class="envelope hero__conteudo">
-        <span class="rotulo" data-entrada>Chalés chave na mão</span>
-        <h1 class="titulo-display hero__titulo" data-entrada>Seu chalé, do projeto à entrega das chaves.</h1>
-        <p class="corpo" data-entrada>Desenvolvemos o projeto, executamos a construção e entregamos
+      <div class="hero__marca">
+        <!-- O <h1> é só para Google e leitor de tela; a tela mostra a marca. -->
+        <h1 class="visualmente-oculto">Flausino Projetos — chalés chave na mão</h1>
+        <p class="hero__nome" aria-hidden="true">Flausino</p>
+        <p class="hero__assinatura" aria-hidden="true">Chalés chave na mão</p>
+      </div>
+    </section>
+
+    <section class="secao abertura">
+      <div class="envelope centralizado">
+        <span class="rotulo">Do terreno ao chalé pronto</span>
+        <h2 class="titulo-display">Seu chalé, do projeto à entrega das chaves.</h2>
+        <p class="corpo">Desenvolvemos o projeto, executamos a construção e entregamos
           seu chalé completo, pronto para morar, receber hóspedes ou gerar renda.</p>
-        <div class="hero__acoes" data-entrada>
-          <a class="pill pill--claro" href="projetos.html">Conhecer projetos</a>
-          <a class="hero__link" href="orcamento.html">Solicitar orçamento</a>
+        <div class="grupo-pills">
+          <a class="pill" href="projetos.html">Conhecer projetos</a>
+          <a class="pill" href="orcamento.html">Solicitar orçamento</a>
         </div>
       </div>
-      <span class="hero__scroll" aria-hidden="true">Role</span>
-      <a class="hero__legenda" href="modelos/mirante.html" data-legenda-hero>Modelo Mirante · A-frame · 65 m²</a>
     </section>
 
     <section class="secao secao--pergaminho">

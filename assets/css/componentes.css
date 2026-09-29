@@ -72,6 +72,28 @@
 }
 .menu-movel a { display: block; padding: var(--e-2) 0; text-decoration: none; }
 
+/* Cabeçalho da home: transparente por cima da foto do hero, com letras
+   brancas; volta ao branco (cabecalho--solido, posto pelo main.js) quando a
+   foto sai da tela ou o menu do celular abre. Tudo sob .com-js: sem
+   JavaScript ninguém tiraria a transparência depois do hero, e sobraria
+   texto branco sobre fundo branco — então sem ele fica o cabeçalho normal. */
+.com-js .cabecalho--sobre-foto {
+  position: fixed; left: 0; right: 0;
+  transition: background var(--transicao), border-color var(--transicao), padding var(--transicao);
+}
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) {
+  background: transparent; border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .marca__nome,
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .marca__sufixo,
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .navegacao a,
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .menu-botao { color: var(--branco); }
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .navegacao .pill { border-color: var(--branco); }
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .navegacao .pill:hover,
+.com-js .cabecalho--sobre-foto:not(.cabecalho--solido) .navegacao .pill:focus-visible {
+  background: var(--branco); color: var(--verde-serra);
+}
+
 /* --- Card de modelo ----------------------------------------------------- */
 .card { display: flex; flex-direction: column; gap: var(--e-2); text-decoration: none; }
 .card__figura { overflow: hidden; background: var(--pergaminho); aspect-ratio: 3 / 2; }
@@ -107,8 +129,8 @@
    vazio. */
 .rodape a[hidden] { display: none; }
 /* .corpo por padrão usa --cinza-texto (pensado para fundo claro — 5,72:1 lá).
-   Sobre o verde-serra do rodapé isso cai para ~2,3:1. Mesmo padrão de
-   .hero__conteudo .corpo: reescreve para a cor clara já usada no rodapé. */
+   Sobre o verde-serra do rodapé isso cai para ~2,3:1: reescreve para a cor
+   clara já usada nas faixas escuras. */
 .rodape .corpo { color: var(--pergaminho); }
 .rodape__grade { display: grid; gap: var(--e-4); grid-template-columns: 1fr; }
 @media (min-width: 760px) { .rodape__grade { grid-template-columns: 2fr 1fr 1fr; } }

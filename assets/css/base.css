@@ -62,6 +62,13 @@ h3 + .corpo { margin-top: var(--e-1); }
 }
 .secao--escura .rotulo { color: var(--terracota-claro); }
 
+/* Texto só para leitor de tela e buscadores (ex.: o nome completo no <h1> do
+   hero, onde a tela mostra só a marca). */
+.visualmente-oculto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
 /* <figure> vem com margin: 1em 40px do navegador. No desktop isso
    desalinhava a legenda da coluna de texto; no celular encolhia a foto do
    modelo para ~2/3 da largura da tela. Zerado em qualquer largura. */

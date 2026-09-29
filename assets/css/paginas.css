@@ -1,14 +1,16 @@
 /* site/assets/css/paginas.css */
-/* --- Hero da home: foto em tela cheia --------------------------------------
-   Referências: BelArosa, Aman, DEN — a foto clara é a protagonista, o texto
-   fica centralizado por cima e há um único botão principal. Ocupa a altura
-   da tela menos o cabeçalho, no computador e no celular. */
+/* --- Hero da home: minimalista -------------------------------------------
+   Referência: ecomorada.com.br. Foto em tela cheia e, no centro, só a marca.
+   Com JavaScript o cabeçalho fica transparente por cima (cabecalho--sobre-
+   foto) e o hero ocupa a tela inteira; sem JavaScript o cabeçalho é o branco
+   de sempre e o hero ocupa a tela menos ele. */
 .hero {
   position: relative; overflow: hidden;
   min-height: calc(100vh - 80px); min-height: calc(100svh - 80px);
   display: grid; place-items: center; text-align: center;
   background: var(--verde-serra);   /* aparece só enquanto a foto carrega */
 }
+.com-js .hero { min-height: 100vh; min-height: 100svh; }
 .hero__slides { position: absolute; inset: 0; z-index: 0; }
 /* Cada slide é um <picture> empilhado e alternado só por opacidade. O
    primeiro já nasce ativo no HTML: sem JavaScript ele fica visível para
@@ -37,80 +39,50 @@
 .hero__slide--saindo { z-index: 0; }
 @keyframes hero-aproximar { from { scale: 1; } to { scale: 1.06; } }
 
-/* Sombra neutra (não verde) e só onde precisa: no alto, embaixo, e uma
-   elipse suave atrás do bloco de texto no centro. O resto da foto fica com
-   a cor dela. As opacidades foram medidas contra as 5 fotos para o texto
-   branco passar em AA — ver o relatório no git log. */
+/* Sombra neutra: mais forte no alto (onde o cabeçalho transparente fica por
+   cima da foto) e embaixo, leve no resto, e uma faixa suave no centro para a
+   marca. Opacidades medidas contra as 5 fotos para o branco passar em AA. */
 .hero__veu {
   position: absolute; inset: 0; z-index: 1;
   background:
-    radial-gradient(ellipse var(--veu-l, 60%) var(--veu-a, 48%) at 50% 52%,
-      rgba(14, 18, 16, 0.62) 0%,
-      rgba(14, 18, 16, 0.46) 55%,
+    radial-gradient(ellipse var(--veu-l, 46%) var(--veu-a, 22%) at 50% 50%,
+      rgba(14, 18, 16, 0.48) 0%,
+      rgba(14, 18, 16, 0.32) 60%,
       rgba(14, 18, 16, 0.00) 100%),
     linear-gradient(to bottom,
-      rgba(14, 18, 16, 0.40) 0%,
-      rgba(14, 18, 16, 0.10) 24%,
-      rgba(14, 18, 16, 0.00) 45%,
-      rgba(14, 18, 16, 0.00) 70%,
-      rgba(14, 18, 16, 0.45) 100%);
+      rgba(14, 18, 16, 0.55) 0%,
+      rgba(14, 18, 16, 0.22) 16%,
+      rgba(14, 18, 16, 0.12) 40%,
+      rgba(14, 18, 16, 0.12) 65%,
+      rgba(14, 18, 16, 0.40) 100%);
 }
-.hero__conteudo {
-  position: relative; z-index: 2; color: var(--branco);
-  padding-block: var(--e-10) var(--e-15);
+@media (max-aspect-ratio: 1/1) { .hero__veu { --veu-l: 90%; --veu-a: 20%; } }
+.hero__marca { position: relative; z-index: 2; color: var(--branco); padding-inline: var(--e-2); }
+/* A marca em letras finas e bem espaçadas. O padding-left igual ao
+   letter-spacing compensa o espaço que sobra depois da última letra, para o
+   nome ficar centrado de verdade. */
+.hero__nome {
+  margin: 0; font-family: var(--fonte-serif); font-weight: 400;
+  font-size: clamp(1.75rem, 5.4vw, 4.9rem); line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.42em; padding-left: 0.42em;
 }
-.hero__titulo {
-  font-size: clamp(2.5rem, 6.4vw, 5.5rem);
-  line-height: 1.06; max-width: 20ch; margin: var(--e-2) auto 0;
+.hero__assinatura {
+  margin: var(--e-3) 0 0; font-size: var(--texto-legenda); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.5em; padding-left: 0.5em;
 }
-.hero__conteudo .corpo {
-  color: var(--pergaminho); max-width: 54ch;
-  margin: var(--e-3) auto var(--e-4);
-}
-/* Branco, não terracota: sobre foto a luminância do fundo muda a cada slide. */
-.hero__conteudo .rotulo { color: var(--branco); }
-.hero__acoes {
-  display: flex; flex-wrap: wrap; gap: var(--e-2) var(--e-4);
-  justify-content: center; align-items: center;
-}
-/* O segundo caminho é link, não outro botão: um só chamariz principal. */
-.hero__link {
-  color: var(--branco); text-decoration: none;
-  font-size: var(--texto-rotulo); font-weight: 600;
-  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
-  padding-block: var(--e-1); border-bottom: 1px solid currentColor;
-}
-.hero__link:hover, .hero__link:focus-visible { border-bottom-color: transparent; }
-.hero__scroll, .hero__legenda {
-  position: absolute; bottom: var(--e-3); z-index: 2;
-  color: var(--branco); font-size: var(--texto-legenda);
-  text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
-}
-.hero__scroll { left: var(--e-4); }
-.hero__legenda {
-  right: var(--e-4); text-decoration: none;
-  transition: opacity 400ms ease;
-}
-.hero__legenda:hover, .hero__legenda:focus-visible { text-decoration: underline; }
-.hero__legenda[data-trocando] { opacity: 0; }
-/* Em tela em pé o bloco de texto ocupa quase a largura toda: a elipse
-   precisa ser proporcionalmente mais larga para cobrir o rótulo e o texto. */
-@media (max-aspect-ratio: 1/1) { .hero__veu { --veu-l: 95%; --veu-a: 50%; } }
 @media (max-width: 699px) {
-  .hero__conteudo { padding-block: var(--e-8) var(--e-10); }
-  .hero__acoes { flex-direction: column; gap: var(--e-3); }
-  .hero__scroll { display: none; }
-  .hero__legenda { left: var(--e-2); right: var(--e-2); text-align: center; }
+  .hero__nome { letter-spacing: 0.3em; padding-left: 0.3em; }
+  .hero__assinatura { letter-spacing: 0.36em; padding-left: 0.36em; }
 }
+/* Entrada: a marca surge devagar, depois a assinatura. Com "Reduzir
+   movimento" vira instantânea (regra global em animacoes.css). */
+.com-js .hero__nome { animation: hero-surgir 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+.com-js .hero__assinatura { animation: hero-surgir 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
+@keyframes hero-surgir { from { opacity: 0; letter-spacing: 0.6em; } }
 
-/* Entrada, no estilo Dala: rótulo, título, texto e ações sobem em sequência
-   ao abrir a página. Animação de CSS, sem JavaScript: com "Reduzir
-   movimento" ela vira instantânea (regra global em animacoes.css). */
-.com-js .hero [data-entrada] { animation: hero-entrar 1.1s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.com-js .hero [data-entrada]:nth-child(2) { animation-delay: 0.12s; }
-.com-js .hero [data-entrada]:nth-child(3) { animation-delay: 0.24s; }
-.com-js .hero [data-entrada]:nth-child(4) { animation-delay: 0.36s; }
-@keyframes hero-entrar { from { opacity: 0; translate: 0 28px; } to { opacity: 1; translate: 0 0; } }
+/* Seção logo abaixo do hero, com o que saiu dele: frase, texto e botões. */
+.abertura .titulo-display { max-width: 20ch; margin-inline: auto; }
 
 .etapas { list-style: none; margin: var(--e-4) 0 0; padding: 0; display: grid; gap: 0; }
 .etapas li { padding-block: var(--e-3); border-top: var(--filete); }

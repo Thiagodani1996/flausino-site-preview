@@ -43,9 +43,20 @@
   function cabecalhoCompacto() {
     var cabecalho = document.querySelector('.cabecalho');
     if (!cabecalho) return;
+    // Na home o cabeçalho fica transparente sobre a foto do hero e vira
+    // sólido (branco) quando a foto sai de baixo dele ou o menu abre.
+    var sobreFoto = cabecalho.classList.contains('cabecalho--sobre-foto');
+    var hero = document.querySelector('.hero');
+    var menu = document.querySelector('.menu-movel');
     var aoRolar = function () {
       cabecalho.classList.toggle('cabecalho--compacto', window.scrollY > 80);
+      if (sobreFoto) {
+        var passouDoHero = !hero || hero.getBoundingClientRect().bottom <= cabecalho.offsetHeight;
+        var menuAberto = menu && menu.dataset.aberto === 'true';
+        cabecalho.classList.toggle('cabecalho--solido', passouDoHero || menuAberto);
+      }
     };
+    document.addEventListener('menu:alternado', aoRolar);
     window.addEventListener('scroll', aoRolar, { passive: true });
     aoRolar();
   }
@@ -58,6 +69,7 @@
       var aberto = menu.dataset.aberto === 'true';
       menu.dataset.aberto = String(!aberto);
       botao.setAttribute('aria-expanded', String(!aberto));
+      document.dispatchEvent(new CustomEvent('menu:alternado'));
     });
   }
 
@@ -152,19 +164,7 @@
     }));
     var temporizador = null;
 
-    var legenda = document.querySelector('[data-legenda-hero]');
     var saindo = null;
-
-    // A legenda some, troca de texto e link, e volta — junto com a foto.
-    function trocarLegenda(slide) {
-      if (!legenda || !slide.dataset.legenda) return;
-      legenda.setAttribute('data-trocando', '');
-      window.setTimeout(function () {
-        legenda.textContent = slide.dataset.legenda;
-        if (slide.dataset.link) legenda.setAttribute('href', slide.dataset.link);
-        legenda.removeAttribute('data-trocando');
-      }, 400);
-    }
 
     function avancar() {
       // O slide que sai continua a aproximação lenta até sumir (ver
@@ -176,7 +176,6 @@
       saindo.classList.remove('hero__slide--ativo');
       indiceAtivo = (indiceAtivo + 1) % slides.length;
       slides[indiceAtivo].classList.add('hero__slide--ativo');
-      trocarLegenda(slides[indiceAtivo]);
     }
 
     function iniciar() {
