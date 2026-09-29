@@ -73,7 +73,12 @@
 }
 @media (max-width: 699px) {
   .hero__nome { letter-spacing: 0.3em; padding-left: 0.3em; }
-  .hero__assinatura { letter-spacing: 0.36em; padding-left: 0.36em; }
+  /* "Projeto · Construção · Acabamento" tem de caber numa linha até em
+     celular de 320px: espaçamento menor e tamanho que acompanha a tela. */
+  .hero__assinatura {
+    font-size: clamp(0.625rem, 3vw, 0.75rem);
+    letter-spacing: 0.2em; padding-left: 0.2em;
+  }
 }
 /* Entrada: a marca surge devagar, depois a assinatura. Com "Reduzir
    movimento" vira instantânea (regra global em animacoes.css). */
