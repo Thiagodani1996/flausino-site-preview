@@ -63,9 +63,10 @@
 
   <main id="conteudo" tabindex="-1">
     <section class="hero">
-      <!-- Slideshow de fotos, não vídeo: 4 slides que alternam os dois
-           modelos e entardecer/dia, todos gerados no mesmo tamanho
-           (1800×1200) para não haver salto de enquadramento ao trocar — ver
+      <!-- Slideshow de fotos, não vídeo: 5 slides que alternam os três
+           modelos e entardecer/dia, todos na mesma proporção 3:2 (1800×1200,
+           e 1536×1024 no Horizonte, cuja fonte é menor) para não haver salto
+           de enquadramento ao trocar — ver
            tools/otimizar-midia.mjs. Sem JavaScript, só o primeiro <picture>
            (com hero__slide--ativo, opacidade 1 por CSS puro, sem depender de
            com-js) aparece; os outros ficam com opacidade 0 para sempre, o
@@ -81,6 +82,10 @@
         <picture class="hero__slide">
           <source srcset="assets/img/hero/bosque-entardecer.webp" type="image/webp">
           <img src="assets/img/hero/bosque-entardecer.jpg" width="1800" height="1200" alt="">
+        </picture>
+        <picture class="hero__slide">
+          <source srcset="assets/img/hero/horizonte-fachada.webp" type="image/webp">
+          <img src="assets/img/hero/horizonte-fachada.jpg" width="1536" height="1024" alt="">
         </picture>
         <picture class="hero__slide">
           <source srcset="assets/img/hero/mirante-dia.webp" type="image/webp">
@@ -173,6 +178,36 @@
           </picture>
           <figcaption class="legenda-estudo">Estudo conceitual — Modelo Bosque</figcaption>
         </figure>
+      </div>
+    </section>
+
+    <section class="secao">
+      <div class="envelope duas-colunas">
+        <figure class="destaque__figura">
+          <picture data-parallax>
+            <source srcset="assets/img/horizonte/fachada.webp" type="image/webp">
+            <img src="assets/img/horizonte/fachada.jpg" width="1536" height="1024"
+                 alt="Cabana Horizonte ao entardecer, com deck suspenso, hidromassagem e guarda-corpo de vidro"
+                 loading="lazy">
+          </picture>
+          <figcaption class="legenda-estudo">Estudo conceitual — Modelo Horizonte</figcaption>
+        </figure>
+        <div data-revelar>
+          <span class="rotulo">Cabana térrea · 38,88 m²</span>
+          <h2 class="titulo">Horizonte</h2>
+          <p class="corpo">Tudo em um pavimento: sala com cozinha, quarto de casal
+            e banheiro, com a sala e o quarto abertos por portas de correr para
+            um deck de 20,16 m² com hidromassagem.</p>
+          <ul class="ficha-resumo">
+            <li><strong><span data-contar>38,88 m²</span></strong> fechados</li>
+            <li><strong>1</strong> quarto</li>
+            <li><strong>1</strong> banheiro</li>
+            <li><strong><span data-contar>20,16 m²</span></strong> de deck</li>
+          </ul>
+          <!-- Sem valor até o dono fechar o preço (ver projetos.js). -->
+          <p class="card__preco">Investimento sob consulta — chave na mão</p>
+          <a class="pill" href="modelos/horizonte.html">Ver o modelo Horizonte</a>
+        </div>
       </div>
     </section>
 

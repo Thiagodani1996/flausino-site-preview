@@ -63,6 +63,9 @@
   display: flex; flex-wrap: wrap; gap: var(--e-3);
   font-size: var(--texto-rotulo); color: var(--cinza-texto);
 }
+/* Nos blocos de modelo da home a linha de preço vem logo antes do botão;
+   sem margem própria ela encostava na borda da pílula. */
+.ficha-resumo ~ .card__preco { margin: 0 0 var(--e-3); }
 .legenda-estudo {
   margin-top: var(--e-1); font-size: var(--texto-legenda);
   text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);

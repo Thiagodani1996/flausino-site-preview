@@ -25,6 +25,13 @@
     return specs.join('');
   }
 
+  // Mesmo raciocínio das specs acima: um modelo publicado antes de o dono
+  // fechar o preço (ex.: Horizonte) não pode virar "A partir de R$ NaN".
+  function precoDoCard(p) {
+    if (p.precoBase === undefined || p.precoBase === null) return 'Investimento sob consulta';
+    return 'A partir de ' + escapar(formatarReal(p.precoBase));
+  }
+
   function cardDisponivel(p) {
     return '' +
       '<a class="card" data-revelar href="' + escapar(p.pagina) + '">' +
@@ -37,7 +44,7 @@
         '</span>' +
         '<span class="card__nome">' + escapar(p.nome) + '</span>' +
         '<span class="card__specs">' + specsDisponivel(p) + '</span>' +
-        '<span class="card__preco">A partir de ' + escapar(formatarReal(p.precoBase)) + '</span>' +
+        '<span class="card__preco">' + precoDoCard(p) + '</span>' +
       '</a>';
   }
 

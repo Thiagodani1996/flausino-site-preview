@@ -104,6 +104,52 @@ const PROJETOS = [
     ],
     pagina: 'modelos/bosque.html',
   },
+
+  /* ---- Horizonte ----------------------------------------------------------
+     Números tirados da planta entregue pelo dono ("Cabana Horizonte"):
+     corpo fechado 7,20 × 5,40 m = 38,88 m², deck 7,20 × 2,80 m = 20,16 m².
+     SEM precoBase: o dono ainda não fechou o valor. Sem o campo, o card do
+     catálogo e a página mostram "Investimento sob consulta", e o modelo não
+     entra em nenhuma faixa quando o visitante filtra por investimento.
+     Quando o valor existir, é só acrescentar  precoBase: 000000,  aqui e
+     trocar o bloco "Investimento" de modelos/horizonte.html (ver
+     COMO-EDITAR.md, seção 3).                                            */
+  {
+    slug: 'horizonte',
+    nome: 'Horizonte',
+    tipologia: 'Cabana',
+    status: 'disponivel',
+    chamada: 'Térrea, para casal, com o deck inteiro voltado para a vista.',
+    resumo: 'Cabana térrea de 38,88 m² com sala e cozinha integradas, ' +
+            'quarto de casal e banheiro, aberta por portas de correr para um ' +
+            'deck de 20,16 m² com hidromassagem.',
+    areaInterna: 38.88,
+    areaDeck: 20.16,
+    quartos: 1,
+    banheiros: 1,
+    dimensoes: '7,20 × 5,40 m',
+    destaques: ['Deck de 20,16 m² com hidromassagem', 'Sala e quarto abertos para o deck', 'Térrea, sem escadas'],
+    ambientes: [
+      { nome: 'Sala e cozinha', texto: '19,38 m² integrados, com cozinha linear de 3,50 m e porta de correr de 2,60 m para o deck.' },
+      { nome: 'Quarto do casal', texto: '9,15 m² com cama queen, armário e porta de correr de 2,00 m para o deck.' },
+      { nome: 'Banheiro', texto: '5,46 m², com box de 1,00 × 1,00 m e janela.' },
+      { nome: 'Deck com hidro', texto: '20,16 m² de deck em madeira com hidromassagem de casal (2,00 × 1,60 m) e guarda-corpo de vidro.' },
+    ],
+    personalizacao: 'O projeto é adaptado ao seu terreno e ao seu gosto — ' +
+      'acabamentos, revestimentos, marcenaria e disposição dos ambientes ' +
+      'são definidos junto com você antes do início da obra.',
+    capa: 'assets/img/horizonte/fachada',
+    planta: 'assets/img/horizonte/planta',
+    galeria: [
+      { arquivo: 'assets/img/horizonte/fachada', alt: 'Cabana Horizonte ao entardecer, com deck suspenso, hidromassagem e guarda-corpo de vidro de frente para as montanhas' },
+      { arquivo: 'assets/img/horizonte/fundos', alt: 'Fundos da cabana Horizonte, com revestimento em madeira, janelas em faixa e cobertura de uma água' },
+      { arquivo: 'assets/img/horizonte/deck-hidromassagem', alt: 'Deck do Horizonte com hidromassagem de casal e duas poltronas diante do vale ao pôr do sol' },
+      { arquivo: 'assets/img/horizonte/sala-cozinha', alt: 'Sala e cozinha integradas do Horizonte vistas do deck, com sofá, mesa redonda e janela sobre a pia' },
+      { arquivo: 'assets/img/horizonte/quarto', alt: 'Quarto do casal do Horizonte com cama queen, paredes em madeira e janela para as montanhas' },
+      { arquivo: 'assets/img/horizonte/banheiro', alt: 'Banheiro do Horizonte com bancada em madeira, espelho redondo e box de vidro' },
+    ],
+    pagina: 'modelos/horizonte.html',
+  },
 ];
 
 if (typeof module !== 'undefined' && module.exports) {
