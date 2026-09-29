@@ -145,6 +145,7 @@
     }));
     var temporizador = null;
     var emReproducao = true;
+    var telaEstreita = window.matchMedia('(max-width: 600px)');
 
     function avancar() {
       slides[indiceAtivo].classList.remove('hero__slide--ativo');
@@ -165,7 +166,16 @@
 
     function atualizarRotulo() {
       botao.setAttribute('aria-pressed', String(emReproducao));
-      if (rotulo) rotulo.textContent = emReproducao ? 'Pausar apresentação' : 'Retomar apresentação';
+      // O leitor de tela sempre ouve a frase inteira; o texto VISÍVEL encurta
+      // no celular, onde "Pausar apresentação" tomava 60% da largura da tela
+      // e competia com os dois botões principais do hero.
+      var frase = emReproducao ? 'Pausar apresentação' : 'Retomar apresentação';
+      botao.setAttribute('aria-label', frase);
+      if (rotulo) {
+        rotulo.textContent = telaEstreita.matches
+          ? (emReproducao ? 'Pausar' : 'Retomar')
+          : frase;
+      }
     }
 
     botao.addEventListener('click', function () {
@@ -173,6 +183,12 @@
       if (emReproducao) iniciar(); else parar();
       atualizarRotulo();
     });
+
+    // Girar o telefone troca a largura; o rótulo acompanha.
+    if (telaEstreita.addEventListener) {
+      telaEstreita.addEventListener('change', atualizarRotulo);
+    }
+    atualizarRotulo();
 
     iniciar();
     atualizarRotulo();
