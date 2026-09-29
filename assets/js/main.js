@@ -54,11 +54,6 @@
     var botao = document.querySelector('.menu-botao');
     var menu = document.querySelector('.menu-movel');
     if (!botao || !menu) return;
-    botao.addEventListener('click', function () {
-      var aberto = menu.dataset.aberto === 'true';
-      menu.dataset.aberto = String(!aberto);
-      botao.setAttribute('aria-expanded', String(!aberto));
-    });
   }
 
   var movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -136,9 +131,13 @@
   // exigência de controle da WCAG.
   function slideshowHero() {
     var slides = Array.prototype.slice.call(document.querySelectorAll('.hero__slide'));
-    var botao = document.querySelector('[data-slideshow-controle]');
-    if (slides.length < 2 || !botao) return;
-    var rotulo = botao.querySelector('[data-slideshow-rotulo]');
+    if (slides.length < 2) return;
+    // O crossfade roda para todo mundo, inclusive sob prefers-reduced-motion:
+    // a preferência pede para tirar MOVIMENTO — translação, parallax, zoom —
+    // e opacidade não é movimento. É o mesmo critério já aplicado ao
+    // [data-revelar]. As fotos são decorativas (aria-hidden) e nenhuma
+    // informação depende delas, então não há conteúdo que alguém precise
+    // parar para conseguir ler.
     var INTERVALO_MS = 6000;
     var indiceAtivo = Math.max(0, slides.findIndex(function (s) {
       return s.classList.contains('hero__slide--ativo');
@@ -164,34 +163,7 @@
       temporizador = null;
     }
 
-    function atualizarRotulo() {
-      botao.setAttribute('aria-pressed', String(emReproducao));
-      // O leitor de tela sempre ouve a frase inteira; o texto VISÍVEL encurta
-      // no celular, onde "Pausar apresentação" tomava 60% da largura da tela
-      // e competia com os dois botões principais do hero.
-      var frase = emReproducao ? 'Pausar apresentação' : 'Retomar apresentação';
-      botao.setAttribute('aria-label', frase);
-      if (rotulo) {
-        rotulo.textContent = telaEstreita.matches
-          ? (emReproducao ? 'Pausar' : 'Retomar')
-          : frase;
-      }
-    }
-
-    botao.addEventListener('click', function () {
-      emReproducao = !emReproducao;
-      if (emReproducao) iniciar(); else parar();
-      atualizarRotulo();
-    });
-
-    // Girar o telefone troca a largura; o rótulo acompanha.
-    if (telaEstreita.addEventListener) {
-      telaEstreita.addEventListener('change', atualizarRotulo);
-    }
-    atualizarRotulo();
-
     iniciar();
-    atualizarRotulo();
   }
 
   function parallax() {

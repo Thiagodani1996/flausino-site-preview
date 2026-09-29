@@ -19,14 +19,23 @@
 .hero__slide--ativo { opacity: 1; z-index: 1; }
 .hero__veu {
   position: absolute; inset: 0; z-index: 1;
-  /* O conteúdo fica ancorado embaixo, então a metade inferior precisa ser
-     opaca o bastante para o texto passar em AA contra QUALQUER frame do vídeo,
-     não só contra a média. O pôr do sol tem frames muito claros. */
-  background: linear-gradient(to top,
-    rgba(36,53,42,0.78) 0%,
-    rgba(36,53,42,0.76) 65%,
-    rgba(36,53,42,0.56) 85%,
-    rgba(36,53,42,0.32) 100%);
+  /* Dois véus somados, em vez de um só chapado. O vertical segura a base,
+     onde ficam os botões; o horizontal escurece a ESQUERDA, que é a coluna do
+     texto. O canto superior direito — céu, pôr do sol, telhado — fica quase
+     limpo. Um véu único e uniforme precisava de 76% de opacidade em quase todo
+     o quadro para o rótulo passar em AA, e isso apagava a foto inteira. */
+  background:
+    linear-gradient(to top,
+      rgba(36,53,42,0.88) 0%,
+      rgba(36,53,42,0.74) 40%,
+      rgba(36,53,42,0.58) 72%,
+      rgba(36,53,42,0.12) 92%,
+      rgba(36,53,42,0.00) 100%),
+    linear-gradient(to right,
+      rgba(36,53,42,0.60) 0%,
+      rgba(36,53,42,0.40) 34%,
+      rgba(36,53,42,0.10) 70%,
+      rgba(36,53,42,0.00) 100%);
 }
 .hero__conteudo { position: relative; z-index: 2; color: var(--branco); padding-block: var(--e-10); }
 .hero__conteudo .corpo { color: var(--pergaminho); margin-block: var(--e-3); }
@@ -41,21 +50,6 @@
   color: var(--branco); font-size: var(--texto-legenda);
   text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
 }
-/* Controle de pausa do vídeo do hero — WCAG 2.2.2: conteúdo em movimento que
-   começa sozinho precisa de um jeito de parar. Fica discreto de propósito:
-   canto oposto ao rótulo "Role", pill pequeno (padding e texto reduzidos em
-   relação ao .pill padrão) para não competir com o título. Herda de .pill/
-   .pill--claro — vazado, sem preenchimento, mesmo hover/foco do resto do
-   site — só o tamanho muda aqui. */
-.hero__controle {
-  position: absolute; right: var(--e-3); bottom: var(--e-3); z-index: 2;
-  padding: 8px 18px; font-size: var(--texto-legenda);
-}
-/* No celular o dedo precisa de 44px de altura para acertar sem erro. */
-@media (max-width: 600px) {
-  .hero__controle { min-height: 44px; padding: 10px 20px; }
-}
-
 .etapas { list-style: none; margin: var(--e-4) 0 0; padding: 0; display: grid; gap: 0; }
 .etapas li { padding-block: var(--e-3); border-top: var(--filete); }
 .etapas li span {
@@ -74,8 +68,12 @@
   text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
   color: var(--cinza-texto);
 }
-.video-apresentacao { width: 100%; max-width: 720px; margin-top: var(--e-3); }
+/* Centralizado e maior: a 1440px ele ficava encostado à esquerda com metade
+   da tela vazia ao lado, o que lia como página inacabada. */
+.video-apresentacao { width: 100%; max-width: 1000px; margin: var(--e-3) auto 0; display: block; }
 .centralizado { text-align: center; }
+.centralizado .corpo { margin-left: auto; margin-right: auto; max-width: 64ch; }
+.centralizado .rotulo { text-align: center; }
 .centralizado .grupo-pills { justify-content: center; margin-top: var(--e-3); }
 
 /* --- Catálogo ----------------------------------------------------------- */

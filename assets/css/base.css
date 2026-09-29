@@ -26,7 +26,15 @@ h1, h2, h3 {
 p { margin: 0; }
 
 .envelope { width: 100%; max-width: var(--largura-max); margin: 0 auto; padding: 0 var(--e-3); }
-.secao { padding-block: var(--secao-y); }
+.secao {
+  padding-block: var(--secao-y);
+  /* A foto que sangra para a direita passa da largura da tela de propósito;
+     sem corte isso viraria barra de rolagem horizontal. `clip` corta sem criar
+     contexto de rolagem; `hidden` fica de reserva para navegador antigo.
+     Nada dentro de .secao usa position: sticky, então não há efeito colateral. */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
 .secao--pergaminho { background: var(--pergaminho); }
 .secao--escura { background: var(--verde-serra); color: var(--branco); }
 .secao--escura .corpo { color: var(--pergaminho); }
@@ -61,7 +69,39 @@ h3 + .corpo { margin-top: var(--e-1); }
 }
 @media (min-width: 900px) {
   .duas-colunas { grid-template-columns: 1fr 1fr; gap: var(--e-8); }
-  .duas-colunas--invertida > :first-child { order: 2; }
+  /* A foto sangra até a borda da tela, do lado em que ela estiver. Presa
+     dentro do envelope de 1200px ela ficava com ~550px numa tela de 1440 e
+     sobrava um vazio enorme do outro lado — a página lia como inacabada. Num
+     negócio em que a foto É o produto, ela merece a largura inteira.
+     A regra olha a POSIÇÃO da foto na grade, não uma classe modificadora:
+     assim as seções alternam foto-esquerda / foto-direita só pela ordem da
+     marcação, sem ninguém precisar lembrar de acrescentar nada. */
+  /* Quem sangra é a IMAGEM, não a <figure>. Sangrar a figura levava a legenda
+     junto para fora da tela, e trazê-la de volta não fecha: a porcentagem da
+     margem passa a resolver contra a largura já esticada da figura, não contra
+     a coluna. Mexendo só no <picture>, a figura e a legenda continuam na
+     grade e a conta fica simples. */
+  .duas-colunas > picture:first-child,
+  .duas-colunas > .destaque__figura:first-child > picture {
+    margin-left: calc(50% - 50vw);
+  }
+  .duas-colunas > picture:last-child,
+  .duas-colunas > .destaque__figura:last-child > picture {
+    margin-right: calc(50% - 50vw);
+  }
+  .duas-colunas > picture,
+  .duas-colunas > .destaque__figura > picture { display: block; }
+  /* <figure> vem com margin: 1em 40px do navegador; sem zerar, a legenda fica
+     40px desalinhada da coluna de texto ao lado. */
+  .duas-colunas > .destaque__figura { margin: 0; }
+  .duas-colunas > picture img,
+  .duas-colunas > .destaque__figura img { width: 100%; }
+  /* Teto de altura: sem ele a foto sangrada fica bem mais alta que a coluna de
+     texto ao lado e sobra uma faixa grande de cor vazia embaixo do texto. */
+  .duas-colunas > picture img,
+  .duas-colunas > .destaque__figura > picture img {
+    max-height: 560px; object-fit: cover;
+  }
 }
 
 .filete { border: 0; border-top: var(--filete); margin: 0; }
