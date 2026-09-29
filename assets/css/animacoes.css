@@ -18,11 +18,48 @@
 .com-js [data-revelar][data-atraso="3"] { transition-delay: 270ms; }
 .com-js [data-revelar][data-atraso="4"] { transition-delay: 360ms; }
 
-/* Parallax leve em fotos de seção */
-[data-parallax] { will-change: transform; }
+/* --- Rolagem com inércia (Lenis) ---------------------------------------- */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
+
+/* --- Fotos: cortina subindo + zoom se acomodando ------------------------- */
+/* data-foto só é posto pelo JavaScript, e só quando dá para observar; sem ele
+   a foto está simplesmente lá. A moldura fica parada e corta; a imagem, com
+   folga de zoom, é que se acomoda e depois desliza no parallax. */
+.com-js [data-foto] {
+  display: block; overflow: hidden;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.3s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.com-js [data-foto] img {
+  scale: 1.3;
+  transition: scale 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: scale, translate;
+}
+.com-js [data-foto][data-foto-visivel="true"] { clip-path: inset(0 0 0 0); }
+.com-js [data-foto][data-foto-visivel="true"] img { scale: 1.12; }
+/* No celular não há parallax, então a folga de zoom não é necessária e a foto
+   fecha no tamanho real. */
+@media (max-width: 767px) {
+  .com-js [data-foto] img { scale: 1.18; }
+  .com-js [data-foto][data-foto-visivel="true"] img { scale: 1; }
+}
+
+/* --- Botões magnéticos --------------------------------------------------- */
+.pill { transition: background var(--transicao), color var(--transicao),
+                    translate 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* --- Números que contam: largura fixa para o texto não pular ------------- */
+[data-contar] { display: inline-block; font-variant-numeric: tabular-nums; }
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  /* Tudo aqui vale só fora da pré-visualização (?movimento), que liga a
+     classe .movimento-forcado no <html> para o dono conferir os efeitos. */
+  html:not(.movimento-forcado) *,
+  html:not(.movimento-forcado) *::before,
+  html:not(.movimento-forcado) *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
@@ -30,19 +67,12 @@
   }
   /* prefers-reduced-motion pede para tirar MOVIMENTO — translação, parallax,
      zoom — não para apagar toda a animação. Opacidade não é movimento, então
-     [data-revelar] continua surgindo com um fade suave; só o componente de
-     translateY(18px) some. Especificidade maior que a regra `*` acima
-     garante que este transition (e não o de 0.001ms) vale para este seletor. */
-  .com-js [data-revelar] {
+     [data-revelar] continua surgindo com um fade suave; só o translateY some. */
+  html.com-js:not(.movimento-forcado) [data-revelar] {
     transform: none !important;
     transition: opacity 400ms ease !important;
   }
-  [data-parallax] { transform: none !important; }
-  /* Mesmo raciocínio para o crossfade do slideshow do hero: opacidade não é
-     movimento (não é pan, zoom nem translação), então o fade entre slides
-     continua e o troca-automático também — o botão de pausar (WCAG 2.2.2)
-     é o mecanismo de controle exigido, não a ausência de movimento. Sem
-     este override, a regra `*` acima zeraria a transition-duration deste
-     seletor e o crossfade viraria um corte seco. */
-  .hero__slide { transition: opacity 1200ms ease !important; }
+  /* Mesmo raciocínio para o crossfade do hero: é só opacidade, então continua.
+     As fotos são decorativas e nenhuma informação depende delas. */
+  html:not(.movimento-forcado) .hero__slide { transition: opacity 1200ms ease !important; }
 }

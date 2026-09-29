@@ -74,9 +74,32 @@ function formatarNumero(valor) {
   return n.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
 }
 
+// Lê um número escrito em português dentro de um texto de página: "R$ 140.000",
+// "47,5 m²", "7,10 m", "30". Devolve o que vem antes, o valor, quantas casas
+// decimais ele tem e o que vem depois — o contador anima só o valor e remonta
+// o texto idêntico ao original no final. Textos com dois números ("2,00 × 2,00
+// m") ou sem número nenhum (um marcador [[...]] ainda não preenchido) devolvem
+// null, e o contador simplesmente deixa o texto como está.
+function lerNumeroBR(texto) {
+  var t = String(texto == null ? '' : texto);
+  if ((t.match(/\d+(?:[.,]\d+)*/g) || []).length !== 1) return null;
+  var m = t.match(/^(\D*?)(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d+))?(\D*)$/);
+  if (!m) return null;
+  var casas = m[3] ? m[3].length : 0;
+  var valor = Number(m[2].replace(/\./g, '') + (m[3] ? '.' + m[3] : ''));
+  if (!Number.isFinite(valor)) return null;
+  return { prefixo: m[1], valor: valor, casas: casas, sufixo: m[4] };
+}
+
+function escreverNumeroBR(valor, casas) {
+  return Number(valor).toLocaleString('pt-BR', {
+    minimumFractionDigits: casas, maximumFractionDigits: casas,
+  });
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     montarMensagemWhatsApp, montarLinkWhatsApp, validarFormulario, formatarReal,
-    escapar, formatarNumero,
+    escapar, formatarNumero, lerNumeroBR, escreverNumeroBR,
   };
 }

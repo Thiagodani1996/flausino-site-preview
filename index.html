@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="sem-js">
 <head>
-  <script>document.documentElement.className = document.documentElement.className.replace('sem-js', 'com-js');</script>
+  <script>(function (h) {
+    h.className = h.className.replace('sem-js', 'com-js');
+    /* Pré-visualização: ?movimento no endereço liga os efeitos mesmo com
+       "Reduzir movimento" ativo no sistema, e vale até fechar a aba. */
+    try {
+      if (/[?&]movimento\b/.test(location.search)) sessionStorage.setItem('flausino-movimento', '1');
+      if (sessionStorage.getItem('flausino-movimento') === '1') h.className += ' movimento-forcado';
+    } catch (e) {}
+  })(document.documentElement);</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flausino Projetos — Chalés chave na mão, do projeto à entrega</title>
@@ -128,12 +136,12 @@
             envidraçada. 65 m² internos em dois pavimentos, deck frontal de 14,4 m²
             com hidromassagem.</p>
           <ul class="ficha-resumo">
-            <li><strong>65 m²</strong> internos</li>
+            <li><strong><span data-contar>65 m²</span></strong> internos</li>
             <li><strong>1</strong> quarto</li>
             <li><strong>1</strong> banheiro</li>
-            <li><strong>14,4 m²</strong> de deck</li>
+            <li><strong><span data-contar>14,4 m²</span></strong> de deck</li>
           </ul>
-          <p class="card__preco">A partir de R$ 140.000 — chave na mão</p>
+          <p class="card__preco">A partir de <span data-contar>R$ 140.000</span> — chave na mão</p>
           <a class="pill" href="modelos/mirante.html">Ver o modelo Mirante</a>
         </div>
       </div>
@@ -153,7 +161,7 @@
             <li><strong>Térreo</strong> único</li>
             <li><strong>Deck</strong> com banheira</li>
           </ul>
-          <p class="card__preco">A partir de R$ 50.000 — chave na mão</p>
+          <p class="card__preco">A partir de <span data-contar>R$ 50.000</span> — chave na mão</p>
           <a class="pill" href="modelos/bosque.html">Ver o modelo Bosque</a>
         </div>
         <figure class="destaque__figura">
@@ -247,6 +255,7 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/contato.js"></script>
+  <script src="assets/js/vendor/lenis.min.js"></script>
   <script src="assets/js/main.js"></script>
   <script type="application/ld+json">
   {

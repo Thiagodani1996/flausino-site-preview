@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="sem-js">
 <head>
-  <script>document.documentElement.className = document.documentElement.className.replace('sem-js', 'com-js');</script>
+  <script>(function (h) {
+    h.className = h.className.replace('sem-js', 'com-js');
+    /* Pré-visualização: ?movimento no endereço liga os efeitos mesmo com
+       "Reduzir movimento" ativo no sistema, e vale até fechar a aba. */
+    try {
+      if (/[?&]movimento\b/.test(location.search)) sessionStorage.setItem('flausino-movimento', '1');
+      if (sessionStorage.getItem('flausino-movimento') === '1') h.className += ' movimento-forcado';
+    } catch (e) {}
+  })(document.documentElement);</script>
   <!--
     TEMPLATE DE MODELO — como usar:
     1. Duplique este arquivo e renomeie para o slug do modelo (ex.: cume.html)
@@ -105,13 +113,13 @@
         <span class="rotulo">Ficha técnica</span>
         <h2 class="titulo">Medidas e áreas.</h2>
         <dl class="ficha">
-          <div><dt>Área interna total</dt><dd>[[AREA_INTERNA]] m²</dd></div>
-          <div><dt>Térreo fechado</dt><dd>[[AREA_TERREO]] m²</dd></div>
-          <div><dt>Pavimento superior</dt><dd>[[AREA_SUPERIOR]] m² úteis</dd></div>
-          <div><dt>Deck frontal</dt><dd>[[AREA_DECK]] m²</dd></div>
+          <div><dt>Área interna total</dt><dd><span data-contar>[[AREA_INTERNA]] m²</span></dd></div>
+          <div><dt>Térreo fechado</dt><dd><span data-contar>[[AREA_TERREO]] m²</span></dd></div>
+          <div><dt>Pavimento superior</dt><dd><span data-contar>[[AREA_SUPERIOR]] m² úteis</span></dd></div>
+          <div><dt>Deck frontal</dt><dd><span data-contar>[[AREA_DECK]] m²</span></dd></div>
           <div><dt>Hidromassagem</dt><dd>[[PREENCHER — dimensões da hidromassagem, se houver]]</dd></div>
           <div><dt>Dimensões</dt><dd>[[DIMENSOES]]</dd></div>
-          <div><dt>Largura total</dt><dd>[[LARGURA_TOTAL]] m</dd></div>
+          <div><dt>Largura total</dt><dd><span data-contar>[[LARGURA_TOTAL]] m</span></dd></div>
           <div><dt>Quartos</dt><dd>[[QUARTOS]]</dd></div>
           <div><dt>Banheiros</dt><dd>[[BANHEIROS]]</dd></div>
         </dl>
@@ -202,7 +210,7 @@
     <section class="secao secao--escura">
       <div class="envelope centralizado">
         <span class="rotulo">Investimento</span>
-        <h2 class="titulo">A partir de [[PRECO]] — chave na mão.</h2>
+        <h2 class="titulo">A partir de <span data-contar>[[PRECO]]</span> — chave na mão.</h2>
         <p class="corpo">Valor de referência para o Modelo [[NOME]]. O orçamento final
           depende do terreno e das personalizações.</p>
         <div class="grupo-pills">
@@ -317,6 +325,7 @@
 
     })();
   </script>
+  <script src="../assets/js/vendor/lenis.min.js"></script>
   <script src="../assets/js/main.js"></script>
   <script type="application/ld+json">
   {

@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="sem-js">
 <head>
-  <script>document.documentElement.className = document.documentElement.className.replace('sem-js', 'com-js');</script>
+  <script>(function (h) {
+    h.className = h.className.replace('sem-js', 'com-js');
+    /* Pré-visualização: ?movimento no endereço liga os efeitos mesmo com
+       "Reduzir movimento" ativo no sistema, e vale até fechar a aba. */
+    try {
+      if (/[?&]movimento\b/.test(location.search)) sessionStorage.setItem('flausino-movimento', '1');
+      if (sessionStorage.getItem('flausino-movimento') === '1') h.className += ' movimento-forcado';
+    } catch (e) {}
+  })(document.documentElement);</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sobre a Flausino Projetos — 30 anos de obra executada</title>
@@ -71,7 +79,7 @@
         <h2 class="titulo">Quem projeta é quem constrói.</h2>
         <div class="pilares">
           <div data-revelar>
-            <h3 class="titulo-p">Mais de 30 anos de obra</h3>
+            <h3 class="titulo-p">Mais de <span data-contar>30</span> anos de obra</h3>
             <p class="corpo">Residências, casas de alto padrão e edifícios executados.
               Chalé bem construído depende de canteiro, não de catálogo.</p>
           </div>
@@ -138,6 +146,7 @@
 
   <script src="assets/js/config.js"></script>
   <script src="assets/js/contato.js"></script>
+  <script src="assets/js/vendor/lenis.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>

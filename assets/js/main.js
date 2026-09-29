@@ -61,7 +61,10 @@
     });
   }
 
-  var movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // "Reduzir movimento" no sistema desliga os efeitos — a não ser na
+  // pré-visualização (?movimento no endereço, ver o script no <head>).
+  var movimentoReduzido = window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+    !document.documentElement.classList.contains('movimento-forcado');
   var telaPequena = window.matchMedia('(max-width: 767px)').matches;
 
   // Enquanto o documento está oculto (aba em segundo plano, prerender), o
@@ -163,16 +166,77 @@
     iniciar();
   }
 
+  // Adia uma configuração até a aba estar visível: navegador suspende o
+  // IntersectionObserver em aba oculta, e um elemento escondido esperando um
+  // observador que nunca dispara fica escondido para sempre.
+  function quandoVisivel(fn) {
+    if (!document.hidden) { fn(); return; }
+    var aoVer = function () {
+      if (document.hidden) return;
+      document.removeEventListener('visibilitychange', aoVer);
+      fn();
+    };
+    document.addEventListener('visibilitychange', aoVer);
+  }
+
+  // Rolagem com inércia (Lenis). Só no computador — no celular o Lenis mantém
+  // a rolagem nativa do dedo, que já tem inércia própria.
+  function rolagemSuave() {
+    if (movimentoReduzido || typeof window.Lenis !== 'function') return;
+    new window.Lenis({ lerp: 0.09, smoothWheel: true, autoRaf: true, anchors: false });
+  }
+
+  // Fotos das seções entram com uma cortina subindo e um zoom se acomodando.
+  // O atributo data-foto (que esconde a foto) só é posto quando já dá para
+  // observar — sem JavaScript, sem IntersectionObserver ou com movimento
+  // reduzido, a foto simplesmente está lá.
+  function revelarFotos() {
+    if (movimentoReduzido || !('IntersectionObserver' in window)) return;
+    var fotos = document.querySelectorAll('.duas-colunas picture, .galeria__principal picture');
+    if (!fotos.length) return;
+    quandoVisivel(function () {
+      // Observa o PAI da foto, não a foto: a foto começa recortada 100% pela
+      // cortina, e o navegador trata um elemento totalmente recortado como
+      // fora da tela — o observador nunca dispararia e a foto ficaria
+      // escondida para sempre.
+      var porPai = new Map();
+      fotos.forEach(function (f) {
+        var pai = f.parentElement;
+        if (!porPai.has(pai)) porPai.set(pai, []);
+        porPai.get(pai).push(f);
+      });
+      var obs = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          (porPai.get(e.target) || []).forEach(function (f) { f.dataset.fotoVisivel = 'true'; });
+          obs.unobserve(e.target);
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.05 });
+      porPai.forEach(function (lista, pai) {
+        lista.forEach(function (f) { f.dataset.foto = ''; });
+        obs.observe(pai);
+      });
+    });
+  }
+
+  // A foto se move por dentro da moldura enquanto a página rola. A moldura
+  // fica parada; a imagem (com zoom de folga) é que desliza.
   function parallax() {
     if (movimentoReduzido || telaPequena) return;
-    var alvos = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+    var alvos = Array.prototype.slice.call(document.querySelectorAll('.duas-colunas picture, .galeria__principal picture'));
     if (!alvos.length) return;
     var pendente = false;
     function aplicar() {
-      alvos.forEach(function (el) {
-        var caixa = el.getBoundingClientRect();
-        var centro = caixa.top + caixa.height / 2 - window.innerHeight / 2;
-        el.style.transform = 'translate3d(0,' + (centro * -0.045).toFixed(2) + 'px,0)';
+      var meio = window.innerHeight / 2;
+      alvos.forEach(function (moldura) {
+        var img = moldura.querySelector('img');
+        if (!img) return;
+        var caixa = moldura.getBoundingClientRect();
+        if (caixa.bottom < -200 || caixa.top > window.innerHeight + 200) return;
+        var distancia = (caixa.top + caixa.height / 2 - meio) / (window.innerHeight + caixa.height);
+        var limite = caixa.height * 0.05;
+        var desloca = Math.max(-limite, Math.min(limite, distancia * -2 * limite));
+        img.style.translate = '0 ' + desloca.toFixed(1) + 'px';
       });
       pendente = false;
     }
@@ -184,6 +248,63 @@
     aplicar();
   }
 
+  // Botões "puxam" levemente para o cursor. Delegação no documento para valer
+  // também nos botões que o catálogo cria depois de filtrar.
+  function botoesMagneticos() {
+    if (movimentoReduzido || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    var atual = null;
+    function soltar() { if (atual) { atual.style.translate = ''; atual = null; } }
+    document.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var pill = e.target.closest ? e.target.closest('.pill') : null;
+      if (atual && atual !== pill) soltar();
+      if (!pill) return;
+      atual = pill;
+      var r = pill.getBoundingClientRect();
+      var dx = e.clientX - (r.left + r.width / 2);
+      var dy = e.clientY - (r.top + r.height / 2);
+      pill.style.translate = (dx * 0.22).toFixed(1) + 'px ' + (dy * 0.35).toFixed(1) + 'px';
+    }, { passive: true });
+    document.addEventListener('pointerout', function (e) { if (!e.relatedTarget) soltar(); });
+  }
+
+  // Números contam do zero até o valor quando aparecem. O texto final é
+  // remontado idêntico ao original — o preço nunca fica errado.
+  function contadores() {
+    if (movimentoReduzido || !('IntersectionObserver' in window)) return;
+    var alvos = Array.prototype.slice.call(document.querySelectorAll('[data-contar]'));
+    if (!alvos.length || typeof lerNumeroBR !== 'function') return;
+    var DURACAO = 1600;
+    function saida(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+    function contar(el) {
+      var original = el.textContent;
+      var n = lerNumeroBR(original);
+      if (!n) return;
+      el.style.minWidth = el.getBoundingClientRect().width + 'px';
+      var inicio = null;
+      function passo(agora) {
+        if (inicio === null) inicio = agora;
+        var t = Math.min(1, (agora - inicio) / DURACAO);
+        el.textContent = n.prefixo + escreverNumeroBR(n.valor * saida(t), n.casas) + n.sufixo;
+        if (t < 1) window.requestAnimationFrame(passo);
+        else el.textContent = original;
+      }
+      window.requestAnimationFrame(passo);
+      // rede de segurança: aconteça o que acontecer, termina no valor certo
+      window.setTimeout(function () { el.textContent = original; }, DURACAO + 400);
+    }
+    quandoVisivel(function () {
+      var obs = new IntersectionObserver(function (entradas) {
+        entradas.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          obs.unobserve(e.target);
+          contar(e.target);
+        });
+      }, { threshold: 0.9 });
+      alvos.forEach(function (el) { obs.observe(el); });
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     try {
       revelarAoRolar();
@@ -193,7 +314,11 @@
       menuMovel();
       slideshowHero();
       document.addEventListener('catalogo:renderizado', ligarWhatsApp);
+      rolagemSuave();
+      revelarFotos();
       parallax();
+      botoesMagneticos();
+      contadores();
       document.addEventListener('catalogo:renderizado', revelarAoRolar);
     } catch (erro) {
       // Um erro em qualquer função acima não pode deixar seções invisíveis:
@@ -201,6 +326,9 @@
       console.error('Erro ao iniciar a página:', erro);
       document.querySelectorAll('[data-revelar]').forEach(function (el) {
         el.dataset.visivel = 'true';
+      });
+      document.querySelectorAll('[data-foto]').forEach(function (el) {
+        el.dataset.fotoVisivel = 'true';
       });
     }
   });
