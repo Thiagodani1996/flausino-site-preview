@@ -62,6 +62,14 @@ h3 + .corpo { margin-top: var(--e-1); }
 }
 .secao--escura .rotulo { color: var(--terracota-claro); }
 
+/* <figure> vem com margin: 1em 40px do navegador. No desktop isso
+   desalinhava a legenda da coluna de texto; no celular encolhia a foto do
+   modelo para ~2/3 da largura da tela. Zerado em qualquer largura. */
+.destaque__figura { margin: 0; }
+/* Botão logo depois de um parágrafo precisa de respiro: sem isto a borda da
+   pílula encostava na última linha do texto. */
+.corpo + .pill, .corpo + .grupo-pills { margin-top: var(--e-3); }
+
 .duas-colunas {
   display: grid; gap: var(--e-6);
   grid-template-columns: 1fr;
@@ -91,18 +99,19 @@ h3 + .corpo { margin-top: var(--e-1); }
   }
   .duas-colunas > picture,
   .duas-colunas > .destaque__figura > picture { display: block; }
-  /* <figure> vem com margin: 1em 40px do navegador; sem zerar, a legenda fica
-     40px desalinhada da coluna de texto ao lado. */
-  .duas-colunas > .destaque__figura { margin: 0; }
   .duas-colunas > picture img,
   .duas-colunas > .destaque__figura img { width: 100%; }
-  /* Teto de altura: sem ele a foto sangrada fica bem mais alta que a coluna de
-     texto ao lado e sobra uma faixa grande de cor vazia embaixo do texto. */
-  .duas-colunas > picture img,
-  .duas-colunas > .destaque__figura > picture img {
-    max-height: 560px; object-fit: cover;
-  }
+  /* Sem teto de altura: a foto aparece inteira, na proporção dela. O teto de
+     560px com object-fit: cover que havia aqui escondia um terço da foto em
+     telas grandes (telhado e deck cortados). A coluna de texto é centralizada
+     na altura da foto (align-items: center), então não sobra faixa vazia.
+
+     Foto em pé (retrato) não sangra: esticada até a borda ela ficaria mais
+     alta que a tela. Fica dentro da coluna, centralizada, com altura máxima
+     de 80% da tela, e a largura acompanha a proporção. */
+  .duas-colunas > picture.foto-retrato { margin: 0; justify-self: center; }
 }
+.foto-retrato img { width: auto; max-width: 100%; max-height: 80vh; margin-inline: auto; }
 
 .filete { border: 0; border-top: var(--filete); margin: 0; }
 .secao--escura .filete { border-top: var(--filete-escuro); }

@@ -219,24 +219,29 @@
     });
   }
 
-  // A foto se move por dentro da moldura enquanto a página rola. A moldura
-  // fica parada; a imagem (com zoom de folga) é que desliza.
+  // A foto inteira (moldura e imagem juntas) sobe um pouco mais devagar que o
+  // texto ao lado enquanto a página rola. Mover a imagem DENTRO da moldura
+  // exigia deixá-la ampliada para sobrar folga, e isso cortava ~20% de cada
+  // foto; movendo a moldura, a foto continua inteira. A galeria do topo das
+  // páginas de modelo fica de fora: ela encosta no título e nas miniaturas.
   function parallax() {
     if (movimentoReduzido || telaPequena) return;
-    var alvos = Array.prototype.slice.call(document.querySelectorAll('.duas-colunas picture, .galeria__principal picture'));
+    var alvos = Array.prototype.slice.call(document.querySelectorAll('.duas-colunas picture'));
     if (!alvos.length) return;
     var pendente = false;
     function aplicar() {
       var meio = window.innerHeight / 2;
       alvos.forEach(function (moldura) {
-        var img = moldura.querySelector('img');
-        if (!img) return;
+        // Mede a posição sem o deslocamento atual, para o cálculo não
+        // realimentar o próprio resultado.
+        var atual = parseFloat((moldura.style.translate || '0 0').split(' ')[1]) || 0;
         var caixa = moldura.getBoundingClientRect();
-        if (caixa.bottom < -200 || caixa.top > window.innerHeight + 200) return;
-        var distancia = (caixa.top + caixa.height / 2 - meio) / (window.innerHeight + caixa.height);
-        var limite = caixa.height * 0.05;
+        var topo = caixa.top - atual;
+        if (topo + caixa.height < -200 || topo > window.innerHeight + 200) return;
+        var distancia = (topo + caixa.height / 2 - meio) / (window.innerHeight + caixa.height);
+        var limite = 40;
         var desloca = Math.max(-limite, Math.min(limite, distancia * -2 * limite));
-        img.style.translate = '0 ' + desloca.toFixed(1) + 'px';
+        moldura.style.translate = '0 ' + desloca.toFixed(1) + 'px';
       });
       pendente = false;
     }

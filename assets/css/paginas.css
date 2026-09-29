@@ -1,5 +1,8 @@
 /* site/assets/css/paginas.css */
-.hero { position: relative; min-height: 88vh; display: grid; align-items: end; overflow: hidden; }
+/* Altura da tela menos o cabeçalho: a foto 3:2 numa tela 16:9 sempre perde
+   um pouco da altura, e 88vh fazia perder até 26%. */
+.hero { position: relative; min-height: calc(100vh - 80px); min-height: calc(100svh - 80px);
+  display: grid; align-items: end; overflow: hidden; }
 .hero__slides { position: absolute; inset: 0; z-index: 0; }
 /* Cada slide é um <picture> empilhado por cima do anterior (por ordem no
    HTML) e alternado só por opacidade — sem depender de com-js: o primeiro
@@ -11,7 +14,12 @@
   opacity: 0; z-index: 0;
   transition: opacity 1200ms ease;
 }
-.hero__slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* --foco (no style de cada <img> do hero) diz qual ponto da foto fica
+   preso quando a tela é mais larga que a foto e sobra corte em cima/embaixo.
+   Nos A-frames a ponta do telhado está quase na borda de cima, então o foco
+   vai para o alto (o corte sai do gramado); sem --foco, centraliza. */
+.hero__slide img { width: 100%; height: 100%; object-fit: cover; display: block;
+  object-position: var(--foco, 50% 50%); }
 /* z-index sobe junto com a opacidade: garante que o slide entrando sempre
    pinta por cima do que está saindo, então o crossfade parece o slide novo
    surgindo sobre o antigo em vez do inverso, não importa a ordem do DOM
@@ -49,6 +57,16 @@
   position: absolute; left: var(--e-3); bottom: var(--e-3); z-index: 2;
   color: var(--branco); font-size: var(--texto-legenda);
   text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
+}
+/* Tela em pé (celular, tablet na vertical): uma foto 3:2 esticada para
+   preencher 88% da altura mostrava só 35% da largura, uma fatia de telhado
+   sob o véu. Aqui a foto fica inteira no topo, na proporção dela, e o texto
+   vem logo abaixo sobre o verde da marca, sem véu. */
+@media (max-aspect-ratio: 1/1), (max-width: 699px) {
+  .hero { min-height: 0; display: block; background: var(--verde-serra); }
+  .hero__slides { position: relative; inset: auto; aspect-ratio: 3 / 2; }
+  .hero__veu, .hero__scroll { display: none; }
+  .hero__conteudo { padding-block: var(--e-6) var(--e-8); }
 }
 .etapas { list-style: none; margin: var(--e-4) 0 0; padding: 0; display: grid; gap: 0; }
 .etapas li { padding-block: var(--e-3); border-top: var(--filete); }
@@ -107,7 +125,16 @@
 /* --- Página de modelo --------------------------------------------------- */
 .galeria { padding-bottom: var(--secao-y); }
 .galeria__principal { margin: 0; }
-.galeria__principal img { width: 100%; max-height: 78vh; object-fit: cover; }
+/* A foto principal cabe inteira na altura da tela, sem corte: a largura é
+   limitada pela altura disponível (tela menos cabeçalho e respiro) vezes a
+   proporção 3:2 das fotos de modelo. Antes ela ocupava a largura toda com
+   teto de 78vh e object-fit: cover, e perdia quase metade da altura. */
+.galeria__principal picture {
+  display: block; margin-inline: auto;
+  width: min(100%, calc((100vh - 150px) * 1.5));
+  width: min(100%, calc((100svh - 150px) * 1.5));
+}
+.galeria__principal img { width: 100%; height: auto; }
 .galeria__principal figcaption { max-width: var(--largura-max); margin: var(--e-1) auto 0; padding: 0 var(--e-3); }
 .galeria__miniaturas {
   display: flex; gap: var(--e-1); overflow-x: auto;
