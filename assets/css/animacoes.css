@@ -38,4 +38,11 @@
     transition: opacity 400ms ease !important;
   }
   [data-parallax] { transform: none !important; }
+  /* Mesmo raciocínio para o crossfade do slideshow do hero: opacidade não é
+     movimento (não é pan, zoom nem translação), então o fade entre slides
+     continua e o troca-automático também — o botão de pausar (WCAG 2.2.2)
+     é o mecanismo de controle exigido, não a ausência de movimento. Sem
+     este override, a regra `*` acima zeraria a transition-duration deste
+     seletor e o crossfade viraria um corte seco. */
+  .hero__slide { transition: opacity 1200ms ease !important; }
 }

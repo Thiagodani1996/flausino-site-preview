@@ -6,6 +6,25 @@
   // antes deste arquivo em toda página que usa o catálogo — ver comentário
   // lá para o porquê de escapar para contexto de atributo.
 
+  // Nem todo modelo tem área interna ou área de deck ainda (ex.: Bosque, cuja
+  // área o dono não informou — ver projetos.js e COMO-EDITAR.md). Uma spec
+  // sem valor não pode virar "undefined m²" nem um "—" no card: o jeito são
+  // de lidar com um dado que não existe é não desenhar aquela spec, em vez
+  // de fingir que existe. Quartos e banheiros sempre existem (todo modelo
+  // 'disponivel' os tem), por isso ficam fora deste filtro.
+  function specsDisponivel(p) {
+    var specs = [];
+    if (p.areaInterna !== undefined && p.areaInterna !== null) {
+      specs.push('<span>' + escapar(formatarNumero(p.areaInterna)) + ' m²</span>');
+    }
+    specs.push('<span>' + escapar(p.quartos) + (p.quartos > 1 ? ' quartos' : ' quarto') + '</span>');
+    specs.push('<span>' + escapar(p.banheiros) + (p.banheiros > 1 ? ' banheiros' : ' banheiro') + '</span>');
+    if (p.areaDeck !== undefined && p.areaDeck !== null) {
+      specs.push('<span>Deck ' + escapar(formatarNumero(p.areaDeck)) + ' m²</span>');
+    }
+    return specs.join('');
+  }
+
   function cardDisponivel(p) {
     return '' +
       '<a class="card" data-revelar href="' + escapar(p.pagina) + '">' +
@@ -17,12 +36,7 @@
           '</picture>' +
         '</span>' +
         '<span class="card__nome">' + escapar(p.nome) + '</span>' +
-        '<span class="card__specs">' +
-          '<span>' + escapar(p.areaInterna) + ' m²</span>' +
-          '<span>' + escapar(p.quartos) + (p.quartos > 1 ? ' quartos' : ' quarto') + '</span>' +
-          '<span>' + escapar(p.banheiros) + (p.banheiros > 1 ? ' banheiros' : ' banheiro') + '</span>' +
-          '<span>Deck ' + escapar(p.areaDeck) + ' m²</span>' +
-        '</span>' +
+        '<span class="card__specs">' + specsDisponivel(p) + '</span>' +
         '<span class="card__preco">A partir de ' + escapar(formatarReal(p.precoBase)) + '</span>' +
       '</a>';
   }

@@ -13,13 +13,17 @@
        galeria), e [[PRECO_NUMERICO]] pelo preço só com dígitos, sem "R$"
        nem pontos (ex.: 140000) — é o valor que os buscadores leem, diferente
        do [[PRECO]] formatado que aparece no texto da página.
-    6. Preencha [[FOTO_CAPA]], [[FOTO_PLANTA]], [[FOTO_SECAO_1]] e
-       [[FOTO_SECAO_2]] com o nome dos arquivos de foto (sem extensão) que
-       você escolher para este modelo — cada um pode ter o nome que você
-       quiser, não precisa repetir o nome usado em outro modelo.
-    7. "O que está incluso" não tem mais [[...]] nesta página: preencha o
-       array `inclusos` do modelo em projetos.js com os itens de verdade.
-       A seção fica oculta sozinha até esse array ter pelo menos um item.
+    6. Preencha [[FOTO_CAPA]], [[FOTO_SECAO_1]] e [[FOTO_SECAO_2]] com o nome
+       dos arquivos de foto (sem extensão) que você escolher para este
+       modelo — cada um pode ter o nome que você quiser, não precisa repetir
+       o nome usado em outro modelo.
+    7. "Planta baixa": se este modelo tem planta, troque [[FOTO_PLANTA]]
+       pelo nome do arquivo e escreva o texto alternativo. Se NÃO tem planta,
+       apague a seção inteira — ela está marcada com "INÍCIO DA SEÇÃO PLANTA
+       BAIXA" e "FIM DA SEÇÃO PLANTA BAIXA" no meio da página.
+    8. "O que está incluso" não tem [[...]]: preencha a lista `inclusos` do
+       modelo em projetos.js. Enquanto essa lista estiver vazia, a seção fica
+       fora da página sozinha, e aparece assim que você preencher.
     Passo a passo completo em COMO-EDITAR.md, na raiz do projeto.
   -->
   <meta charset="utf-8">
@@ -114,6 +118,12 @@
       </div>
     </section>
 
+    <!-- ============ INÍCIO DA SEÇÃO "PLANTA BAIXA" ============
+         Se este modelo NÃO tem planta baixa pronta, apague tudo daqui até a
+         linha "FIM DA SEÇÃO PLANTA BAIXA" mais abaixo. A página funciona
+         normalmente sem esta seção.
+         Se tem planta, troque [[FOTO_PLANTA]] pelo nome do arquivo (sem a
+         extensão) e escreva o texto alternativo descrevendo os ambientes. -->
     <section class="secao">
       <div class="envelope">
         <span class="rotulo">Planta baixa</span>
@@ -121,13 +131,14 @@
         <figure class="planta">
           <picture>
             <source srcset="../assets/img/[[SLUG]]/[[FOTO_PLANTA]].webp" type="image/webp">
-            <img src="../assets/img/[[SLUG]]/[[FOTO_PLANTA]].jpg" width="2400" height="1667" loading="lazy"
-                 alt="Planta baixa do [[NOME]]: [[PREENCHER — ambientes do térreo e do pavimento superior, conforme a planta]]">
+            <img src="../assets/img/[[SLUG]]/[[FOTO_PLANTA]].jpg" loading="lazy"
+                 alt="Planta baixa do [[NOME]]: descreva aqui os ambientes de cada pavimento">
           </picture>
           <figcaption class="legenda-estudo">Estudo preliminar — sujeito a adaptação ao terreno</figcaption>
         </figure>
       </div>
     </section>
+    <!-- ============ FIM DA SEÇÃO PLANTA BAIXA ============ -->
 
     <section class="secao secao--escura">
       <div class="envelope">
@@ -303,6 +314,7 @@
           blocoInclusos.hidden = false;
         }
       }
+
     })();
   </script>
   <script src="../assets/js/main.js"></script>

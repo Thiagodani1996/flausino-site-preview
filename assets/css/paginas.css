@@ -1,9 +1,22 @@
 /* site/assets/css/paginas.css */
 .hero { position: relative; min-height: 88vh; display: grid; align-items: end; overflow: hidden; }
-.hero__video {
+.hero__slides { position: absolute; inset: 0; z-index: 0; }
+/* Cada slide é um <picture> empilhado por cima do anterior (por ordem no
+   HTML) e alternado só por opacidade — sem depender de com-js: o primeiro
+   já nasce com hero__slide--ativo no HTML, então sem JavaScript ele fica
+   opaco para sempre e os demais, transparentes para sempre. Isso é o próprio
+   fallback são, não uma classe que o JS precisa aplicar depois. */
+.hero__slide {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; z-index: 0;
+  opacity: 0; z-index: 0;
+  transition: opacity 1200ms ease;
 }
+.hero__slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* z-index sobe junto com a opacidade: garante que o slide entrando sempre
+   pinta por cima do que está saindo, então o crossfade parece o slide novo
+   surgindo sobre o antigo em vez do inverso, não importa a ordem do DOM
+   (importa no loop, quando volta do último slide para o primeiro). */
+.hero__slide--ativo { opacity: 1; z-index: 1; }
 .hero__veu {
   position: absolute; inset: 0; z-index: 1;
   /* O conteúdo fica ancorado embaixo, então a metade inferior precisa ser

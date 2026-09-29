@@ -55,16 +55,34 @@
 
   <main id="conteudo" tabindex="-1">
     <section class="hero">
-      <video class="hero__video" autoplay muted playsinline
-             poster="assets/video/mirante-deck-poster.jpg"
-             fetchpriority="high" aria-hidden="true" data-video-hero>
-        <!-- Sem o atributo loop: o reinício depois do primeiro ciclo é
-             feito por site/assets/js/main.js (loopVideoHero), que pula a
-             montagem e recomeça do chalé pronto. Sem JavaScript, o vídeo
-             toca uma vez e para no último quadro — comportamento são. -->
-        <source src="assets/video/mirante-deck.mp4" type="video/mp4">
-        <source src="assets/video/mirante-deck.webm" type="video/webm">
-      </video>
+      <!-- Slideshow de fotos, não vídeo: 4 slides que alternam os dois
+           modelos e entardecer/dia, todos gerados no mesmo tamanho
+           (1800×1200) para não haver salto de enquadramento ao trocar — ver
+           tools/otimizar-midia.mjs. Sem JavaScript, só o primeiro <picture>
+           (com hero__slide--ativo, opacidade 1 por CSS puro, sem depender de
+           com-js) aparece; os outros ficam com opacidade 0 para sempre, o
+           que é o comportamento são de um slideshow que nunca troca. Com
+           JavaScript, site/assets/js/main.js (slideshowHero) alterna a
+           classe hero__slide--ativo entre eles em looping. -->
+      <div class="hero__slides" aria-hidden="true" data-slideshow-hero>
+        <picture class="hero__slide hero__slide--ativo">
+          <source srcset="assets/img/hero/mirante-entardecer.webp" type="image/webp">
+          <img src="assets/img/hero/mirante-entardecer.jpg" width="1800" height="1200"
+               fetchpriority="high" alt="">
+        </picture>
+        <picture class="hero__slide">
+          <source srcset="assets/img/hero/bosque-entardecer.webp" type="image/webp">
+          <img src="assets/img/hero/bosque-entardecer.jpg" width="1800" height="1200" alt="">
+        </picture>
+        <picture class="hero__slide">
+          <source srcset="assets/img/hero/mirante-dia.webp" type="image/webp">
+          <img src="assets/img/hero/mirante-dia.jpg" width="1800" height="1200" alt="">
+        </picture>
+        <picture class="hero__slide">
+          <source srcset="assets/img/hero/bosque-lateral.webp" type="image/webp">
+          <img src="assets/img/hero/bosque-lateral.jpg" width="1800" height="1200" alt="">
+        </picture>
+      </div>
       <div class="hero__veu"></div>
       <div class="envelope hero__conteudo">
         <span class="rotulo">Chalés chave na mão</span>
@@ -76,9 +94,9 @@
           <a class="pill pill--claro" href="orcamento.html">Solicitar orçamento</a>
         </div>
       </div>
-      <button type="button" class="pill pill--claro hero__controle" data-video-controle
+      <button type="button" class="pill pill--claro hero__controle" data-slideshow-controle
               aria-pressed="true">
-        <span data-video-rotulo>Pausar vídeo</span>
+        <span data-slideshow-rotulo>Pausar apresentação</span>
       </button>
       <span class="hero__scroll" aria-hidden="true">Role</span>
     </section>

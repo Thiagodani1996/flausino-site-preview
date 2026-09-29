@@ -65,8 +65,18 @@ function escapar(texto) {
     .replace(/'/g, '&#39;');
 }
 
+// Medidas vêm de projetos.js como número JavaScript, que usa ponto decimal.
+// Em português a vírgula é que separa decimal: 14.4 precisa sair "14,4".
+// Inteiros saem sem vírgula nenhuma — 65 continua "65", não "65,0".
+function formatarNumero(valor) {
+  var n = Number(valor);
+  if (!Number.isFinite(n)) return '';
+  return n.toLocaleString('pt-BR', { maximumFractionDigits: 2 });
+}
+
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    montarMensagemWhatsApp, montarLinkWhatsApp, validarFormulario, formatarReal, escapar,
+    montarMensagemWhatsApp, montarLinkWhatsApp, validarFormulario, formatarReal,
+    escapar, formatarNumero,
   };
 }

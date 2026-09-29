@@ -29,7 +29,14 @@ function filtrarProjetos(projetos, filtros) {
   const ativo = temFiltroAtivo(f);
   return (projetos || []).filter((p) => {
     if (p.status === 'em-desenvolvimento') return !ativo;
-    if (f.porte && derivarPorte(p.areaInterna) !== f.porte) return false;
+    // Um modelo sem areaInterna (ex.: Bosque, cuja área ainda não foi
+    // informada pelo dono) não tem como ser classificado em nenhum porte.
+    // Sem filtro de porte ativo ele aparece normalmente — só é excluído
+    // quando o visitante filtra por porte, porque nenhuma faixa serve.
+    if (f.porte) {
+      if (p.areaInterna === undefined || p.areaInterna === null) return false;
+      if (derivarPorte(p.areaInterna) !== f.porte) return false;
+    }
     if (f.quartos && derivarFaixaQuartos(p.quartos) !== f.quartos) return false;
     if (f.investimento && derivarFaixaInvestimento(p.precoBase) !== f.investimento) return false;
     return true;

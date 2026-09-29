@@ -33,7 +33,6 @@ const PROJETOS = [
     precoBase: 140000,
     capa: 'assets/img/mirante/exterior-entardecer',
     planta: 'assets/img/mirante/planta',
-    video: 'assets/video/mirante-deck',
     galeria: [
       { arquivo: 'assets/img/mirante/exterior-entardecer', alt: 'Chalé A-frame Mirante ao entardecer, com deck de madeira, hidromassagem e vista para as montanhas' },
       { arquivo: 'assets/img/mirante/exterior-dia', alt: 'Fachada lateral do chalé Mirante durante o dia, mostrando a cobertura metálica grafite e o volume lateral em madeira' },
@@ -63,12 +62,47 @@ const PROJETOS = [
     status: 'em-desenvolvimento',
     chamada: 'Para pousada e hospedagem. Pensado para múltiplas unidades no mesmo terreno.',
   },
+
+  /* ---- Bosque -------------------------------------------------------------
+     Modelo compacto de entrada. O dono ainda NÃO informou área interna, área
+     de deck, dimensões nem largura total — por isso esses campos (presentes
+     no Mirante acima) ficam de fora aqui, em vez de zero ou inventados.
+     areaInterna ausente também significa que este modelo não aparece quando
+     o visitante filtra por porte (ver derivarPorte/filtrarProjetos em
+     catalogo.js) — não há como classificar um porte sem a área. Também não
+     há campo `planta`: o dono ainda não entregou planta baixa deste modelo,
+     então a seção "Planta baixa" da página fica oculta (ver bosque.html e
+     o bloco data-bloco-planta em _TEMPLATE.html).                        */
   {
     slug: 'bosque',
     nome: 'Bosque',
     tipologia: 'Compacto',
-    status: 'em-desenvolvimento',
+    status: 'disponivel',
     chamada: 'Compacto e acessível. O primeiro chalé para quem está começando.',
+    resumo: 'Ambiente único e integrado — cama, cozinha e mesa de jantar — mais ' +
+            'banheiro completo e deck com banheira independente em frente à ' +
+            'fachada envidraçada.',
+    quartos: 1,
+    banheiros: 1,
+    destaques: ['Deck com banheira independente', 'Fachada envidraçada emoldurando a vista', 'Ambiente único integrado, sem escada'],
+    ambientes: [
+      { nome: 'Estar, cozinha e quarto', texto: 'Ambiente único e integrado: cama, cozinha compacta e mesa de jantar no mesmo espaço.' },
+      { nome: 'Banheiro', texto: 'Completo, com chuveiro, bancada e janela.' },
+      { nome: 'Deck com banheira', texto: 'Deck externo com banheira independente, de frente para a vista, em frente à fachada envidraçada.' },
+    ],
+    personalizacao: 'O projeto é adaptado ao seu terreno e ao seu gosto — ' +
+      'acabamentos, revestimentos, marcenaria e disposição dos ambientes ' +
+      'são definidos junto com você antes do início da obra.',
+    precoBase: 50000,
+    capa: 'assets/img/bosque/exterior-entardecer',
+    galeria: [
+      { arquivo: 'assets/img/bosque/exterior-entardecer', alt: 'Chalé compacto Bosque ao entardecer, fachada frontal com deck de madeira e banheira independente' },
+      { arquivo: 'assets/img/bosque/exterior-lateral', alt: 'Vista lateral do chalé Bosque ao entardecer, com a cobertura em A e o vale ao fundo' },
+      { arquivo: 'assets/img/bosque/interior-estar', alt: 'Interior integrado do Bosque com cama, cozinha compacta e mesa de jantar no mesmo ambiente' },
+      { arquivo: 'assets/img/bosque/interior-vista', alt: 'Fachada envidraçada do Bosque emoldurando o pôr do sol, vista de dentro do quarto' },
+      { arquivo: 'assets/img/bosque/banheiro', alt: 'Banheiro do Bosque com box de chuveiro, bancada e janela' },
+    ],
+    pagina: 'modelos/bosque.html',
   },
 ];
 

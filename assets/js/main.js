@@ -123,69 +123,59 @@
     alvos.forEach(function (el) { observer.observe(el); });
   }
 
-  function controleVideoHero() {
-    // WCAG 2.2.2 (Pausar, Parar, Ocultar): conteúdo que se move sozinho por
-    // mais de 5s precisa de um jeito de pausar. A versão antiga cumpria isso
-    // apagando o autoplay inteiro para quem pede prefers-reduced-motion — só
-    // que a preferência pede para tirar MOVIMENTO exagerado (parallax,
-    // zoom, translação), não para nunca mostrar o vídeo. O resultado era o
-    // único elemento em movimento do site sumindo por completo para quem
-    // mais depende de um mecanismo de controle. Agora o autoplay vale para
-    // todo mundo e o controle é um botão de verdade: visível, com texto que
-    // muda ("Pausar vídeo" / "Reproduzir vídeo") e aria-pressed refletindo
-    // se o vídeo está tocando.
-    var video = document.querySelector('[data-video-hero]');
-    var botao = document.querySelector('[data-video-controle]');
-    if (!video || !botao) return;
-    var rotulo = botao.querySelector('[data-video-rotulo]');
+  // Slideshow de fotos do hero (substituiu o vídeo mirante-deck.mp4/.webm —
+  // o dono achou a qualidade do vídeo ruim e preferiu fotos, ver
+  // tools/otimizar-midia.mjs). WCAG 2.2.2 (Pausar, Parar, Ocultar):
+  // conteúdo que troca sozinho por mais de 5s precisa de um jeito de
+  // pausar — por isso o botão que já existia para o vídeo (mesmo visual,
+  // mesmo comportamento de aria-pressed) foi reaproveitado aqui em vez de
+  // criado do zero. prefers-reduced-motion NÃO desliga o troca-automático:
+  // a preferência pede para tirar movimento (translação, parallax, zoom), e
+  // opacidade não é movimento — o crossfade continua rolando para todo
+  // mundo (ver o override em animacoes.css), o botão é que cumpre a
+  // exigência de controle da WCAG.
+  function slideshowHero() {
+    var slides = Array.prototype.slice.call(document.querySelectorAll('.hero__slide'));
+    var botao = document.querySelector('[data-slideshow-controle]');
+    if (slides.length < 2 || !botao) return;
+    var rotulo = botao.querySelector('[data-slideshow-rotulo]');
+    var INTERVALO_MS = 6000;
+    var indiceAtivo = Math.max(0, slides.findIndex(function (s) {
+      return s.classList.contains('hero__slide--ativo');
+    }));
+    var temporizador = null;
+    var emReproducao = true;
+
+    function avancar() {
+      slides[indiceAtivo].classList.remove('hero__slide--ativo');
+      indiceAtivo = (indiceAtivo + 1) % slides.length;
+      slides[indiceAtivo].classList.add('hero__slide--ativo');
+    }
+
+    function iniciar() {
+      if (temporizador) return;
+      temporizador = window.setInterval(avancar, INTERVALO_MS);
+    }
+
+    function parar() {
+      if (!temporizador) return;
+      window.clearInterval(temporizador);
+      temporizador = null;
+    }
 
     function atualizarRotulo() {
-      var tocando = !video.paused && !video.ended;
-      botao.setAttribute('aria-pressed', String(tocando));
-      if (rotulo) rotulo.textContent = tocando ? 'Pausar vídeo' : 'Reproduzir vídeo';
+      botao.setAttribute('aria-pressed', String(emReproducao));
+      if (rotulo) rotulo.textContent = emReproducao ? 'Pausar apresentação' : 'Retomar apresentação';
     }
 
     botao.addEventListener('click', function () {
-      if (video.paused) {
-        // play() devolve uma Promise; se o navegador recusar (raro com
-        // muted, mas existe), engolimos o erro — o botão continua
-        // operável e o rótulo reflete o estado real via os eventos abaixo.
-        video.play().catch(function () {});
-      } else {
-        video.pause();
-      }
+      emReproducao = !emReproducao;
+      if (emReproducao) iniciar(); else parar();
+      atualizarRotulo();
     });
-    // Cobre também mudanças de estado fora do clique (autoplay bloqueado,
-    // vídeo pausado pelo próprio navegador ao trocar de aba em alguns casos).
-    video.addEventListener('play', atualizarRotulo);
-    video.addEventListener('pause', atualizarRotulo);
+
+    iniciar();
     atualizarRotulo();
-  }
-
-  // A animação de montagem (peças do chalé voando até o lugar) é o melhor
-  // gancho de storytelling do vídeo — mas só na primeira vez. Com o
-  // atributo loop nativo, os 4,38s inteiros repetem sem parar e a
-  // montagem, que devia impressionar, vira bordão a cada ciclo. Quadro a
-  // quadro (ver relatório em /tmp/relatorio-hero-movimento.md): a
-  // estrutura é só um esqueleto de madeira até ~1,58s, quando um flash
-  // branco corta para o chalé pronto (com paredes, luz acesa, banheira);
-  // esse próprio flash ainda está clareando a tela até a imagem estabilizar
-  // por volta de 1,96s — o primeiro instante em que nada mais muda além do
-  // movimento lento da câmera. Esse é o ponto de reinício: a primeira volta
-  // mostra a montagem inteira (0 ao fim), as seguintes pulam direto para o
-  // chalé já pronto.
-  var tempoChalePronto = 1.96;
-
-  function loopVideoHero() {
-    var video = document.querySelector('[data-video-hero]');
-    if (!video) return;
-    video.addEventListener('ended', function () {
-      video.currentTime = tempoChalePronto;
-      // play() devolve uma Promise; se o navegador recusar retomar por
-      // algum motivo, o vídeo só fica parado no último quadro — não quebra
-      // nada, só deixa de reiniciar.
-      video.play().catch(function () {});
-    });
   }
 
   function parallax() {
@@ -216,8 +206,7 @@
       preencherContato();
       cabecalhoCompacto();
       menuMovel();
-      controleVideoHero();
-      loopVideoHero();
+      slideshowHero();
       document.addEventListener('catalogo:renderizado', ligarWhatsApp);
       parallax();
       document.addEventListener('catalogo:renderizado', revelarAoRolar);
