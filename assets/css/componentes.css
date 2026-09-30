@@ -165,3 +165,24 @@
     font-size: clamp(0.625rem, 3vw, 0.75rem); letter-spacing: 0.2em; padding-left: 0.2em;
   }
 }
+
+/* --- Botão flutuante de WhatsApp (criado pelo main.js) ------------------ */
+/* Discreto de propósito: pequeno, redondo, na cor noite com filete claro,
+   sem sombra. Nasce invisível e aparece (data-visivel) depois do topo. */
+.whats-flutuante {
+  position: fixed; right: var(--e-3); bottom: var(--e-3); z-index: 40;
+  width: 48px; height: 48px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--noite); color: var(--branco);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 0; visibility: hidden; translate: 0 8px;
+  transition: opacity var(--transicao), translate var(--transicao),
+              visibility var(--transicao), background var(--transicao);
+}
+.whats-flutuante[data-visivel="true"] { opacity: 0.92; visibility: visible; translate: 0 0; }
+.whats-flutuante:hover, .whats-flutuante:focus-visible { background: var(--verde-profundo); opacity: 1; }
+.whats-flutuante svg { width: 22px; height: 22px; fill: currentColor; }
+@media (max-width: 699px) {
+  .whats-flutuante { right: var(--e-2); bottom: var(--e-2); width: 44px; height: 44px; }
+  .whats-flutuante svg { width: 20px; height: 20px; }
+}

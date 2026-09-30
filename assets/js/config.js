@@ -8,7 +8,6 @@ const CONTATO = {
   cidade: 'Vespasiano',
   estado: 'MG',
   atendimento: 'todo o Brasil',
-  formspreeId: '[[PREENCHER]]',
   cnpj: '[[PREENCHER]]',
 };
 

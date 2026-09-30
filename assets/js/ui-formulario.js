@@ -37,25 +37,22 @@
         return;
       }
 
-      if (!CONTATO.formspreeId || CONTATO.formspreeId.indexOf('[[') === 0) {
-        estado.textContent = 'O formulário ainda não está conectado. ' +
-          'Use o botão de WhatsApp acima — respondemos por lá.';
-        return;
+      // Selects vão para a mensagem com o texto que a pessoa viu na tela.
+      function texto(nome) {
+        var campo = form.elements[nome];
+        if (campo && campo.tagName === 'SELECT') return campo.options[campo.selectedIndex].text;
+        return campo ? campo.value : '';
       }
-
-      estado.textContent = 'Enviando...';
-      fetch('https://formspree.io/f/' + CONTATO.formspreeId, {
-        method: 'POST',
-        headers: { Accept: 'application/json' },
-        body: new FormData(form),
-      }).then(function (resposta) {
-        if (!resposta.ok) throw new Error('falha no envio');
-        form.reset();
-        estado.textContent = 'Recebemos seu pedido. Entramos em contato em breve.';
-      }).catch(function () {
-        estado.textContent = 'Não conseguimos enviar agora. ' +
-          'Fale com a gente pelo WhatsApp que resolvemos na hora.';
+      var link = montarLinkWhatsApp(CONTATO.whatsapp, {
+        texto: montarMensagemOrcamento({
+          nome: texto('nome'), cidade: texto('cidade'), terreno: texto('terreno'),
+          modelo: texto('modelo'), prazo: texto('prazo'), mensagem: texto('mensagem'),
+        }),
       });
+      estado.textContent = 'Abrindo o WhatsApp com a sua mensagem pronta...';
+      // Nova aba no computador; se o navegador bloquear, abre na mesma aba.
+      var janela = window.open(link, '_blank', 'noopener');
+      if (!janela) window.location.href = link;
     });
   });
 })();

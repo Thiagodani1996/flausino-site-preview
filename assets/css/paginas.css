@@ -114,6 +114,17 @@
     rgba(14, 18, 16, 0.60) 62%,
     rgba(14, 18, 16, 0.85) 100%);
 }
+/* Banner baixo (Orçamento): com menos altura, o nome fica mais no alto,
+   onde a sombra comum ainda é fraca. Aqui ela começa a escurecer antes. */
+.banner--baixo::after {
+  background: linear-gradient(to bottom,
+    rgba(14, 18, 16, 0.60) 0,
+    rgba(14, 18, 16, 0.52) 80px,
+    rgba(14, 18, 16, 0.30) max(16%, 130px),
+    rgba(14, 18, 16, 0.45) 45%,
+    rgba(14, 18, 16, 0.70) 70%,
+    rgba(14, 18, 16, 0.85) 100%);
+}
 .banner__conteudo { position: relative; z-index: 2; padding-block: var(--e-15) var(--e-10); }
 .banner .rotulo { color: var(--branco); }
 .banner__nome { margin: 0; font-size: clamp(2.25rem, 6.4vw, 5.5rem); }

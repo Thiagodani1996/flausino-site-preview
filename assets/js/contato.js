@@ -2,6 +2,8 @@
 
 function montarMensagemWhatsApp(contexto) {
   const ctx = contexto || {};
+  // Texto já montado (ex.: o formulário de orçamento) vai do jeito que veio.
+  if (ctx.texto) return ctx.texto;
   const abertura = 'Olá! Vim pelo site da Flausino Projetos.';
   if (ctx.modelo) {
     return `${abertura} Tenho interesse no modelo ${ctx.modelo} e gostaria de ` +
@@ -31,16 +33,35 @@ function montarLinkWhatsApp(numero, contexto) {
   return `https://wa.me/${digitos}?text=${texto}`;
 }
 
+// O formulário de orçamento não tem servidor: ele monta a mensagem e abre o
+// WhatsApp. Por isso não pede o número de quem escreve — a conversa já chega
+// com ele — e não precisa de armadilha contra robô (robô não manda WhatsApp).
 function validarFormulario(dados) {
   const d = dados || {};
   const erros = {};
   if (!String(d.nome || '').trim()) erros.nome = 'Informe seu nome.';
-  if (String(d.whatsapp || '').replace(/\D/g, '').length < 10) {
-    erros.whatsapp = 'Informe um WhatsApp com DDD.';
-  }
   if (!String(d.cidade || '').trim()) erros.cidade = 'Informe sua cidade.';
-  if (String(d.website || '').trim()) erros.website = 'Envio bloqueado.'; // honeypot
+  if (!String(d.modelo || '').trim()) erros.modelo = 'Escolha um modelo (ou "Ainda não sei").';
   return { valido: Object.keys(erros).length === 0, erros };
+}
+
+// Mensagem do orçamento, um campo por linha, para chegar organizada no
+// WhatsApp. Recebe os textos como a pessoa viu (ex.: "Sim, já tenho"), não
+// os códigos das opções. A mensagem livre só entra se tiver algo escrito.
+function montarMensagemOrcamento(campos) {
+  const c = campos || {};
+  const linhas = [
+    'Olá! Vim pelo site da Flausino Projetos e gostaria de um orçamento.',
+    '',
+    `Nome: ${String(c.nome || '').trim()}`,
+    `Cidade: ${String(c.cidade || '').trim()}`,
+    `Terreno: ${String(c.terreno || '').trim()}`,
+    `Modelo de interesse: ${String(c.modelo || '').trim()}`,
+    `Prazo: ${String(c.prazo || '').trim()}`,
+  ];
+  const mensagem = String(c.mensagem || '').trim();
+  if (mensagem) linhas.push(`Mensagem: ${mensagem}`);
+  return linhas.join('\n');
 }
 
 function formatarReal(valor) {
@@ -99,7 +120,7 @@ function escreverNumeroBR(valor, casas) {
 
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
-    montarMensagemWhatsApp, montarLinkWhatsApp, validarFormulario, formatarReal,
+    montarMensagemWhatsApp, montarLinkWhatsApp, montarMensagemOrcamento, validarFormulario, formatarReal,
     escapar, formatarNumero, lerNumeroBR, escreverNumeroBR,
   };
 }
