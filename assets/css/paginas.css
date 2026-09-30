@@ -369,3 +369,60 @@
 .erro { color: var(--terracota-texto); font-size: var(--texto-legenda); text-transform: none; letter-spacing: normal; }
 .formulario__estado { margin-top: var(--e-2); font-size: var(--texto-rotulo); color: var(--verde-serra); }
 .formulario__armadilha { position: absolute; left: -9999px; }
+
+/* --- Celular (até 699px) ----------------------------------------------------
+   Ajustes só para telefone. Tudo fica dentro deste @media: a versão de
+   computador não muda (conferida pixel a pixel contra capturas de antes). */
+@media (max-width: 699px) {
+  /* Rótulos, botões e links com seta: letras menos espaçadas, para textos
+     como "QUERO CONSTRUIR ESTE MODELO" caberem numa linha. */
+  .rotulo { letter-spacing: 0.28em; }
+  .pill { letter-spacing: 0.14em; padding: 15px 20px; }
+  .link-seta { letter-spacing: 0.2em; }
+
+  /* Painéis da home: menos vão escuro depois do link. (Os fatos da linha de
+     rótulo usam espaço que não quebra no HTML, então cada fato fica inteiro
+     e o "·" nunca começa uma linha.) */
+  .painel__conteudo { padding-bottom: var(--e-8); }
+
+  /* Ficha técnica: nomes como "ÁREA INTERNA TOTAL" numa linha. */
+  .ficha dt { letter-spacing: 0.16em; }
+
+  /* Galeria dos modelos: carrossel de deslizar para o lado. Todas as fotos
+     com a mesma altura e a largura na proporção de cada uma (--proporcao,
+     posta pelo script da página), então nada é cortado; a próxima foto
+     aparece na borda, mostrando que dá para deslizar. Vai de borda a borda
+     da tela. */
+  .galeria__grade {
+    display: flex; gap: var(--e-2);
+    overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scroll-padding-inline: var(--e-3);
+    margin-inline: calc(-1 * var(--e-3)); padding: 0 var(--e-3) var(--e-1);
+    scrollbar-width: none;
+  }
+  .galeria__grade::-webkit-scrollbar { display: none; }
+  .galeria__linha { display: contents; }
+  .galeria__item {
+    flex: 0 0 auto; scroll-snap-align: start;
+    height: 52vw; width: calc(52vw * var(--proporcao, 1.5));
+  }
+  .galeria__grade + .legenda-estudo::after { content: ' · Deslize para ver mais'; }
+  .galeria__item picture { display: block; height: 100%; }
+  .galeria__item img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Simulador: "Taxa de ocupação — 50%" na mesma linha, barra embaixo. */
+  .simulador__campos label[for="ocupacao"] { display: block; }
+  .simulador__campos label[for="ocupacao"] input { display: block; width: 100%; margin-top: var(--e-2); }
+
+  /* Linha do tempo (Como funciona): título e texto mais próximos. */
+  .linha-tempo li { padding-block: var(--e-4); gap: var(--e-1); }
+  .linha-tempo li .corpo { margin-top: 0; }
+
+  /* Cards "Em desenvolvimento": caixa do monograma mais baixa. */
+  .card--aberto .card__figura { aspect-ratio: 3 / 1; }
+}
+/* Celular estreito (320–379px, comum em Android): letra do botão um pouco
+   menor, para "QUERO CONSTRUIR ESTE MODELO" continuar numa linha. */
+@media (max-width: 379px) {
+  .pill { font-size: 0.6875rem; letter-spacing: 0.1em; padding: 14px 16px; }
+}
