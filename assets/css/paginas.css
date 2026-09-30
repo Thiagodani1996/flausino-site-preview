@@ -473,4 +473,6 @@
    menor, para "QUERO CONSTRUIR ESTE MODELO" continuar numa linha. */
 @media (max-width: 379px) {
   .pill { font-size: 0.6875rem; letter-spacing: 0.1em; padding: 14px 16px; }
+  /* "Projetamos · Construímos · Entregamos" numa linha também em 320px. */
+  .hero__assinatura { letter-spacing: 0.1em; padding-left: 0.1em; }
 }
