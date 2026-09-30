@@ -380,10 +380,9 @@
   .pill { letter-spacing: 0.14em; padding: 15px 20px; }
   .link-seta { letter-spacing: 0.2em; }
 
-  /* Painéis da home: menos vão escuro depois do link. (Os fatos da linha de
-     rótulo usam espaço que não quebra no HTML, então cada fato fica inteiro
-     e o "·" nunca começa uma linha.) */
-  .painel__conteudo { padding-bottom: var(--e-8); }
+  /* Painéis da home: os fatos da linha de rótulo usam espaço que não quebra
+     no HTML, então cada fato fica inteiro e o "·" nunca começa uma linha.
+     O texto vai sobre a foto — ver "Painéis dos modelos" mais abaixo. */
 
   /* Ficha técnica: nomes como "ÁREA INTERNA TOTAL" numa linha. */
   .ficha dt { letter-spacing: 0.16em; }
@@ -421,26 +420,37 @@
   /* Cards "Em desenvolvimento": caixa do monograma mais baixa. */
   .card--aberto .card__figura { aspect-ratio: 3 / 1; }
 
-  /* Hero: em tela em pé, uma foto 3:2 esticada até a altura da tela só
-     mostrava ~35% da largura. Aqui a foto aparece INTEIRA, logo abaixo do
-     menu (65px, a altura dele no celular), e a marca vem embaixo numa faixa
-     noite. O slideshow e a aproximação lenta continuam; a faixa das fotos
-     corta o zoom para ele não invadir a marca. */
-  .hero, .com-js .hero {
-    display: block; min-height: 0; background: var(--noite);
+  /* Hero: tela cheia, como no computador. Numa tela em pé a foto deitada só
+     cabe em parte, então a "câmera" percorre a foto de um lado ao outro
+     enquanto ela está na tela (6s + 1,2s de troca) — no fim do slide a pessoa
+     viu o chalé inteiro. Slides pares voltam no sentido contrário. Com
+     "Reduzir movimento" a foto fica parada no ponto de foco (--foco-m): a
+     regra global de animacoes.css desliga a animação. */
+  .com-js .hero__slide--ativo img,
+  .com-js .hero__slide--saindo img { animation: hero-percorrer 7.5s ease-in-out both; }
+  .com-js .hero__slide:nth-child(even).hero__slide--ativo img,
+  .com-js .hero__slide:nth-child(even).hero__slide--saindo img { animation-direction: reverse; }
+
+  /* Painéis dos modelos: texto sobre a foto, como no computador, numa
+     proporção de retrato (4:5) que mostra bem mais do chalé que a tela
+     cheia. A sombra só escurece a metade de baixo, onde fica o texto. */
+  .painel { display: flex; align-items: flex-end; aspect-ratio: 4 / 5; }
+  .painel__foto { position: absolute; inset: 0; }
+  .painel__foto img { height: 100%; object-fit: cover; }
+  .painel::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(to top, rgba(14, 18, 16, 0.88) 0%, rgba(14, 18, 16, 0.74) 45%, rgba(14, 18, 16, 0.45) 72%, rgba(14, 18, 16, 0) 95%);
   }
-  .com-js .hero { padding-top: 65px; }
-  .hero__slides {
-    position: relative; inset: auto; width: 100%;
-    aspect-ratio: 3 / 2; overflow: hidden;
+  .painel__conteudo { position: relative; z-index: 2; width: 100%; gap: var(--e-2); padding: 0 var(--e-3) var(--e-4); }
+  .painel .rotulo { color: var(--branco); }
+}
+@media (max-width: 699px) {
+  /* Percorre só o miolo da foto, onde está o chalé: indo de ponta a ponta,
+     o começo e o fim do movimento mostravam só céu, telhado e mato. */
+  @keyframes hero-percorrer {
+    from { object-position: 22% 50%; }
+    to   { object-position: 78% 50%; }
   }
-  .hero__slide img { object-position: 50% 50%; }
-  .hero__veu { display: none; }
-  .hero__marca { padding: var(--e-6) var(--e-2) var(--e-8); }
-  /* Sem véu, o menu transparente ficaria sobre o céu da foto ao rolar. Na
-     home, enquanto está sobre o hero, ele fica na cor noite (no topo é a
-     mesma cor da faixa atrás dele, então nada muda). */
-  .com-js body:has(.hero) .cabecalho--sobre-foto:not(.cabecalho--solido) { background: var(--noite); }
 }
 /* Celular estreito (320–379px, comum em Android): letra do botão um pouco
    menor, para "QUERO CONSTRUIR ESTE MODELO" continuar numa linha. */
