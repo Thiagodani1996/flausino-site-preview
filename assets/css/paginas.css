@@ -420,6 +420,27 @@
 
   /* Cards "Em desenvolvimento": caixa do monograma mais baixa. */
   .card--aberto .card__figura { aspect-ratio: 3 / 1; }
+
+  /* Hero: em tela em pé, uma foto 3:2 esticada até a altura da tela só
+     mostrava ~35% da largura. Aqui a foto aparece INTEIRA, logo abaixo do
+     menu (65px, a altura dele no celular), e a marca vem embaixo numa faixa
+     noite. O slideshow e a aproximação lenta continuam; a faixa das fotos
+     corta o zoom para ele não invadir a marca. */
+  .hero, .com-js .hero {
+    display: block; min-height: 0; background: var(--noite);
+  }
+  .com-js .hero { padding-top: 65px; }
+  .hero__slides {
+    position: relative; inset: auto; width: 100%;
+    aspect-ratio: 3 / 2; overflow: hidden;
+  }
+  .hero__slide img { object-position: 50% 50%; }
+  .hero__veu { display: none; }
+  .hero__marca { padding: var(--e-6) var(--e-2) var(--e-8); }
+  /* Sem véu, o menu transparente ficaria sobre o céu da foto ao rolar. Na
+     home, enquanto está sobre o hero, ele fica na cor noite (no topo é a
+     mesma cor da faixa atrás dele, então nada muda). */
+  .com-js body:has(.hero) .cabecalho--sobre-foto:not(.cabecalho--solido) { background: var(--noite); }
 }
 /* Celular estreito (320–379px, comum em Android): letra do botão um pouco
    menor, para "QUERO CONSTRUIR ESTE MODELO" continuar numa linha. */
