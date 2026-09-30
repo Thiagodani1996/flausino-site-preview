@@ -8,7 +8,7 @@ body {
   font-size: var(--texto-corpo);
   line-height: var(--altura-corpo);
   color: var(--verde-serra);
-  background: var(--branco);
+  background: var(--pergaminho);
 }
 /* height: auto é obrigatório: as imagens carregam os atributos width/height do
    HTML (que evitam layout shift), e sem isto o max-width encolhe só a largura
@@ -19,7 +19,7 @@ a { color: inherit; }
 
 h1, h2, h3 {
   font-family: var(--fonte-serif);
-  font-weight: 500;
+  font-weight: 400;
   line-height: var(--altura-display);
   margin: 0;
 }
@@ -35,30 +35,35 @@ p { margin: 0; }
   overflow-x: hidden;
   overflow-x: clip;
 }
-.secao--pergaminho { background: var(--pergaminho); }
-.secao--escura { background: var(--verde-serra); color: var(--branco); }
+.secao--pergaminho { background: var(--areia); }
+.secao--escura { background: var(--noite); color: var(--branco); }
 .secao--escura .corpo { color: var(--pergaminho); }
 
-.titulo-display { font-size: clamp(2.25rem, 6vw, var(--texto-display-g)); }
-.titulo         { font-size: clamp(1.75rem, 4vw, var(--texto-titulo-g)); }
+.titulo-display { font-size: clamp(2.5rem, 6vw, var(--texto-display-g)); text-wrap: balance; }
+.titulo         { font-size: clamp(2rem, 4.4vw, var(--texto-titulo-g)); text-wrap: balance; }
 .titulo-p       { font-size: var(--texto-titulo); }
 
-.corpo { font-size: var(--texto-corpo); color: var(--cinza-texto); max-width: 56ch; }
+.corpo { font-size: var(--texto-corpo); font-weight: 300; color: var(--cinza-texto); max-width: 56ch; }
+/* Frase de abertura de página: serifa, maior, sem cinza. */
+.corpo--destaque {
+  font-family: var(--fonte-serif); font-weight: 400; font-size: clamp(1.375rem, 2.4vw, 1.875rem);
+  line-height: 1.4; color: var(--verde-serra); max-width: 38ch;
+}
 .secao--escura .corpo { color: var(--pergaminho); }
 
 /* Os títulos têm margin 0 de propósito — o ritmo é controlado aqui, não herdado
    do navegador. Sem estas regras o parágrafo encosta no título. */
-h1 + .corpo, h2 + .corpo { margin-top: var(--e-3); }
+h1 + .corpo, h2 + .corpo { margin-top: var(--e-4); }
 h3 + .corpo { margin-top: var(--e-1); }
 
 .rotulo {
   display: block;
-  font-size: var(--texto-rotulo);
+  font-size: var(--texto-legenda);
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: var(--espaco-caixa-alta);
+  letter-spacing: var(--espaco-largo);
   color: var(--terracota-texto);
-  margin-bottom: var(--e-2);
+  margin-bottom: var(--e-3);
 }
 .secao--escura .rotulo { color: var(--terracota-claro); }
 
@@ -69,13 +74,10 @@ h3 + .corpo { margin-top: var(--e-1); }
   clip-path: inset(50%); white-space: nowrap;
 }
 
-/* <figure> vem com margin: 1em 40px do navegador. No desktop isso
-   desalinhava a legenda da coluna de texto; no celular encolhia a foto do
-   modelo para ~2/3 da largura da tela. Zerado em qualquer largura. */
-.destaque__figura { margin: 0; }
 /* Botão logo depois de um parágrafo precisa de respiro: sem isto a borda da
    pílula encostava na última linha do texto. */
 .corpo + .pill, .corpo + .grupo-pills { margin-top: var(--e-3); }
+.corpo + .link-seta { margin-top: var(--e-4); }
 
 .duas-colunas {
   display: grid; gap: var(--e-6);
@@ -96,29 +98,19 @@ h3 + .corpo { margin-top: var(--e-1); }
      margem passa a resolver contra a largura já esticada da figura, não contra
      a coluna. Mexendo só no <picture>, a figura e a legenda continuam na
      grade e a conta fica simples. */
-  .duas-colunas > picture:first-child,
-  .duas-colunas > .destaque__figura:first-child > picture {
+  .duas-colunas > picture:first-child {
     margin-left: calc(50% - 50vw);
   }
-  .duas-colunas > picture:last-child,
-  .duas-colunas > .destaque__figura:last-child > picture {
+  .duas-colunas > picture:last-child {
     margin-right: calc(50% - 50vw);
   }
-  .duas-colunas > picture,
-  .duas-colunas > .destaque__figura > picture { display: block; }
-  .duas-colunas > picture img,
-  .duas-colunas > .destaque__figura img { width: 100%; }
+  .duas-colunas > picture { display: block; }
+  .duas-colunas > picture img { width: 100%; }
   /* Sem teto de altura: a foto aparece inteira, na proporção dela. O teto de
      560px com object-fit: cover que havia aqui escondia um terço da foto em
      telas grandes (telhado e deck cortados). A coluna de texto é centralizada
-     na altura da foto (align-items: center), então não sobra faixa vazia.
-
-     Foto em pé (retrato) não sangra: esticada até a borda ela ficaria mais
-     alta que a tela. Fica dentro da coluna, centralizada, com altura máxima
-     de 80% da tela, e a largura acompanha a proporção. */
-  .duas-colunas > picture.foto-retrato { margin: 0; justify-self: center; }
+     na altura da foto (align-items: center), então não sobra faixa vazia. */
 }
-.foto-retrato img { width: auto; max-width: 100%; max-height: 80vh; margin-inline: auto; }
 
 .filete { border: 0; border-top: var(--filete); margin: 0; }
 .secao--escura .filete { border-top: var(--filete-escuro); }
@@ -130,3 +122,12 @@ h3 + .corpo { margin-top: var(--e-1); }
 .pular-para-conteudo:focus { left: var(--e-2); top: var(--e-2); z-index: 100; }
 
 :focus-visible { outline: 2px solid var(--terracota); outline-offset: 3px; }
+
+/* Nome em maiúsculas espaçadas, a mesma voz da marca FLAUSINO do hero. */
+.nome-espacado {
+  font-family: var(--fonte-serif); font-weight: 400; line-height: 1;
+  text-transform: uppercase; letter-spacing: 0.3em;
+}
+/* Centralizado: o espaço depois da última letra desalinha o nome; o
+   padding-left do mesmo tamanho compensa. */
+.nome-espacado--centro { padding-left: 0.3em; }

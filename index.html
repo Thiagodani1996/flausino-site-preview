@@ -111,7 +111,7 @@
           seu chalé completo, pronto para morar, receber hóspedes ou gerar renda.</p>
         <div class="grupo-pills">
           <a class="pill" href="projetos.html">Conhecer projetos</a>
-          <a class="pill" href="orcamento.html">Solicitar orçamento</a>
+          <a class="link-seta" href="orcamento.html">Solicitar orçamento</a>
         </div>
       </div>
     </section>
@@ -121,131 +121,106 @@
         <span class="rotulo">Uma solução completa</span>
         <h2 class="titulo">Uma única empresa, do projeto ao acabamento.</h2>
         <ol class="etapas">
-          <li data-revelar><span>01</span><h3 class="titulo-p">Projeto</h3><p class="corpo">Estudo e projeto executivo adaptados ao seu terreno.</p></li>
-          <li data-revelar><span>02</span><h3 class="titulo-p">Planejamento</h3><p class="corpo">Orçamento fechado, cronograma e definição de materiais.</p></li>
-          <li data-revelar><span>03</span><h3 class="titulo-p">Construção</h3><p class="corpo">Equipes próprias em obra, com acompanhamento do início ao fim.</p></li>
-          <li data-revelar><span>04</span><h3 class="titulo-p">Acabamento</h3><p class="corpo">Entrega do chalé pronto, sem pendências.</p></li>
+          <li data-revelar><span class="etapas__numero">01</span><h3 class="titulo-p">Projeto</h3><p class="corpo">Estudo e projeto executivo adaptados ao seu terreno.</p></li>
+          <li data-revelar><span class="etapas__numero">02</span><h3 class="titulo-p">Planejamento</h3><p class="corpo">Orçamento fechado, cronograma e definição de materiais.</p></li>
+          <li data-revelar><span class="etapas__numero">03</span><h3 class="titulo-p">Construção</h3><p class="corpo">Equipes próprias em obra, com acompanhamento do início ao fim.</p></li>
+          <li data-revelar><span class="etapas__numero">04</span><h3 class="titulo-p">Acabamento</h3><p class="corpo">Entrega do chalé pronto, sem pendências.</p></li>
         </ol>
       </div>
     </section>
 
-    <section class="secao">
-      <div class="envelope duas-colunas">
-        <figure class="destaque__figura">
-          <picture data-parallax>
-            <source srcset="assets/img/mirante/exterior-entardecer.webp" type="image/webp">
-            <img src="assets/img/mirante/exterior-entardecer.jpg" width="1800" height="1200"
-                 alt="Chalé A-frame Mirante ao entardecer, com deck de madeira e hidromassagem"
-                 loading="lazy">
-          </picture>
-          <figcaption class="legenda-estudo">Estudo conceitual — Modelo Mirante</figcaption>
-        </figure>
-        <div data-revelar>
-          <span class="rotulo">A-frame · 65 m²</span>
-          <h2 class="titulo">Mirante</h2>
-          <p class="corpo">A-frame para casal, com a vista emoldurada pela fachada
-            envidraçada. 65 m² internos em dois pavimentos, deck frontal de 14,4 m²
-            com hidromassagem.</p>
-          <ul class="ficha-resumo">
-            <li><strong><span data-contar>65 m²</span></strong> internos</li>
-            <li><strong>1</strong> quarto</li>
-            <li><strong>1</strong> banheiro</li>
-            <li><strong><span data-contar>14,4 m²</span></strong> de deck</li>
-          </ul>
-          <p class="card__preco">A partir de <span data-contar>R$ 140.000</span> — chave na mão</p>
-          <a class="pill" href="modelos/mirante.html">Ver o modelo Mirante</a>
-        </div>
+    <section class="secao secao--escura titulo-secao">
+      <div class="envelope centralizado">
+        <span class="rotulo">Nossos modelos</span>
+        <h2 class="titulo">Chalés prontos para o seu terreno.</h2>
       </div>
     </section>
 
-    <section class="secao">
-      <div class="envelope duas-colunas">
-        <div data-revelar>
-          <span class="rotulo">A-frame compacto</span>
-          <h2 class="titulo">Bosque</h2>
-          <p class="corpo">Ambiente único, de um pavimento só: cama, cozinha e mesa
-            no mesmo espaço, com a fachada envidraçada virada para a vista e uma
-            banheira no deck. O primeiro chalé para quem está começando.</p>
-          <ul class="ficha-resumo">
-            <li><strong>1</strong> quarto</li>
-            <li><strong>1</strong> banheiro</li>
-            <li><strong>Térreo</strong> único</li>
-            <li><strong>Deck</strong> com banheira</li>
-          </ul>
-          <p class="card__preco">A partir de <span data-contar>R$ 50.000</span> — chave na mão</p>
-          <a class="pill" href="modelos/bosque.html">Ver o modelo Bosque</a>
+    <!-- Um painel por modelo disponível (o teste em tests/estrutura.test.js
+         confere contra projetos.js). Os fatos da linha de rótulo são os que
+         já estão na página de cada modelo — nada de número novo. -->
+    <section class="painel" aria-labelledby="painel-mirante">
+      <picture class="painel__foto">
+        <source srcset="assets/img/mirante/exterior-entardecer.webp" type="image/webp">
+        <img src="assets/img/mirante/exterior-entardecer.jpg" width="1800" height="1200" loading="lazy"
+             alt="Chalé A-frame Mirante ao entardecer, com deck de madeira e hidromassagem">
+      </picture>
+      <div class="painel__conteudo">
+        <div>
+          <p class="painel__contagem">01 / 03</p>
+          <span class="rotulo">A-frame · 65 m² · 1 quarto · deck 14,4 m²</span>
+          <h3 class="painel__nome nome-espacado" id="painel-mirante">Mirante</h3>
+          <p class="painel__preco">A partir de <span data-contar>R$ 140.000</span></p>
         </div>
-        <figure class="destaque__figura">
-          <picture data-parallax>
-            <source srcset="assets/img/bosque/exterior-entardecer.webp" type="image/webp">
-            <img src="assets/img/bosque/exterior-entardecer.jpg" width="1800" height="1200"
-                 alt="Chalé A-frame compacto Bosque ao entardecer, com deck de madeira e banheira independente"
-                 loading="lazy">
-          </picture>
-          <figcaption class="legenda-estudo">Estudo conceitual — Modelo Bosque</figcaption>
-        </figure>
+        <a class="link-seta" href="modelos/mirante.html">Ver o modelo</a>
       </div>
     </section>
 
-    <section class="secao">
-      <div class="envelope duas-colunas">
-        <figure class="destaque__figura">
-          <picture data-parallax>
-            <source srcset="assets/img/horizonte/fachada.webp" type="image/webp">
-            <img src="assets/img/horizonte/fachada.jpg" width="1536" height="1024"
-                 alt="Cabana Horizonte ao entardecer, com deck suspenso, hidromassagem e guarda-corpo de vidro"
-                 loading="lazy">
-          </picture>
-          <figcaption class="legenda-estudo">Estudo conceitual — Modelo Horizonte</figcaption>
-        </figure>
-        <div data-revelar>
-          <span class="rotulo">Cabana térrea · 38,88 m²</span>
-          <h2 class="titulo">Horizonte</h2>
-          <p class="corpo">Tudo em um pavimento: sala com cozinha, quarto de casal
-            e banheiro, com a sala e o quarto abertos por portas de correr para
-            um deck de 20,16 m² com hidromassagem.</p>
-          <ul class="ficha-resumo">
-            <li><strong><span data-contar>38,88 m²</span></strong> fechados</li>
-            <li><strong>1</strong> quarto</li>
-            <li><strong>1</strong> banheiro</li>
-            <li><strong><span data-contar>20,16 m²</span></strong> de deck</li>
-          </ul>
+    <section class="painel" aria-labelledby="painel-bosque">
+      <picture class="painel__foto">
+        <source srcset="assets/img/bosque/exterior-entardecer.webp" type="image/webp">
+        <img src="assets/img/bosque/exterior-entardecer.jpg" width="1800" height="1200" loading="lazy"
+             alt="Chalé A-frame compacto Bosque ao entardecer, com deck de madeira e banheira independente">
+      </picture>
+      <div class="painel__conteudo">
+        <div>
+          <p class="painel__contagem">02 / 03</p>
+          <span class="rotulo">A-frame compacto · 1 quarto · deck com banheira</span>
+          <h3 class="painel__nome nome-espacado" id="painel-bosque">Bosque</h3>
+          <p class="painel__preco">A partir de <span data-contar>R$ 50.000</span></p>
+        </div>
+        <a class="link-seta" href="modelos/bosque.html">Ver o modelo</a>
+      </div>
+    </section>
+
+    <section class="painel" aria-labelledby="painel-horizonte">
+      <picture class="painel__foto">
+        <source srcset="assets/img/horizonte/fachada.webp" type="image/webp">
+        <img src="assets/img/horizonte/fachada.jpg" width="1536" height="1024" loading="lazy"
+             alt="Cabana Horizonte ao entardecer, com deck suspenso, hidromassagem e guarda-corpo de vidro">
+      </picture>
+      <div class="painel__conteudo">
+        <div>
+          <p class="painel__contagem">03 / 03</p>
+          <span class="rotulo">Cabana térrea · 38,88 m² · deck 20,16 m²</span>
+          <h3 class="painel__nome nome-espacado" id="painel-horizonte">Horizonte</h3>
           <!-- Sem valor até o dono fechar o preço (ver projetos.js). -->
-          <p class="card__preco">Investimento sob consulta — chave na mão</p>
-          <a class="pill" href="modelos/horizonte.html">Ver o modelo Horizonte</a>
+          <p class="painel__preco">Valor sob consulta</p>
         </div>
+        <a class="link-seta" href="modelos/horizonte.html">Ver o modelo</a>
+      </div>
+    </section>
+
+    <section class="dividido">
+      <div class="dividido__texto" data-revelar>
+        <span class="rotulo">O diferencial</span>
+        <h2 class="titulo">Uma única empresa cuidando de todas as etapas.</h2>
+        <p class="corpo">Projeto, responsabilidade técnica e execução dentro de casa.
+          Você não coordena arquiteto, engenheiro e empreiteiro separados — assina
+          um contrato e recebe as chaves.</p>
+        <a class="link-seta" href="como-funciona.html">Como funciona</a>
+      </div>
+      <picture class="dividido__foto">
+        <source srcset="assets/img/mirante/estar-cozinha.webp" type="image/webp">
+        <img src="assets/img/mirante/estar-cozinha.jpg" width="1800" height="2102" loading="lazy"
+             alt="Interior integrado do chalé Mirante com estar, cozinha e escada lateral">
+      </picture>
+    </section>
+
+    <section class="faixa-foto">
+      <picture class="faixa-foto__foto">
+        <source srcset="assets/img/horizonte/deck-hidromassagem.webp" type="image/webp">
+        <img src="assets/img/horizonte/deck-hidromassagem.jpg" width="1536" height="1024" loading="lazy" alt="">
+      </picture>
+      <div class="envelope faixa-foto__conteudo">
+        <span class="rotulo">Para investidores</span>
+        <h2 class="titulo">Tem um terreno ou está planejando investir em chalés?</h2>
+        <p class="corpo">Chalés para Airbnb, pousadas e terrenos ociosos. Vamos avaliar seu projeto.</p>
+        <a class="pill pill--claro" href="investidores.html">Falar com um especialista</a>
       </div>
     </section>
 
     <section class="secao secao--escura">
-      <div class="envelope duas-colunas">
-        <div data-revelar>
-          <span class="rotulo">O diferencial</span>
-          <h2 class="titulo">Uma única empresa cuidando de todas as etapas.</h2>
-          <p class="corpo">Projeto, responsabilidade técnica e execução dentro de casa.
-            Você não coordena arquiteto, engenheiro e empreiteiro separados — assina
-            um contrato e recebe as chaves.</p>
-          <a class="pill pill--claro" href="como-funciona.html">Como funciona</a>
-        </div>
-        <picture class="foto-retrato" data-parallax>
-          <source srcset="assets/img/mirante/estar-cozinha.webp" type="image/webp">
-          <img src="assets/img/mirante/estar-cozinha.jpg" width="1800" height="2102"
-               alt="Interior integrado do chalé Mirante com estar, cozinha e escada lateral"
-               loading="lazy">
-        </picture>
-      </div>
-    </section>
-
-    <section class="secao secao--pergaminho">
-      <div class="envelope centralizado">
-        <span class="rotulo">Para investidores</span>
-        <h2 class="titulo">Tem um terreno ou está planejando investir em chalés?</h2>
-        <p class="corpo">Chalés para Airbnb, pousadas e terrenos ociosos. Vamos avaliar seu projeto.</p>
-        <a class="pill" href="investidores.html">Falar com um especialista</a>
-      </div>
-    </section>
-
-    <section class="secao">
       <div class="envelope">
         <span class="rotulo">Assista</span>
         <h2 class="titulo">O Mirante por dentro.</h2>
@@ -255,42 +230,38 @@
       </div>
     </section>
 
-    <section class="secao secao--escura">
+    <section class="secao fechamento">
       <div class="envelope centralizado">
-        <h2 class="titulo">Vamos conversar sobre o seu chalé.</h2>
+        <span class="rotulo">Vamos conversar</span>
+        <h2 class="titulo-display">Sobre o seu chalé.</h2>
         <div class="grupo-pills">
-          <a class="pill pill--claro" data-whatsapp data-origem="geral" href="#">Falar no WhatsApp</a>
-          <a class="pill pill--claro" href="orcamento.html">Solicitar orçamento</a>
+          <a class="pill" data-whatsapp data-origem="geral" href="#">Falar no WhatsApp</a>
+          <a class="link-seta" href="orcamento.html">Solicitar orçamento</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="rodape">
-    <div class="envelope rodape__grade">
-      <div>
-        <p class="cabecalho__marca" style="margin-bottom:var(--e-2)">
-          <span class="marca__nome">Flausino</span><span class="marca__sufixo">Projetos</span>
-        </p>
-        <p class="corpo">Projeto e construção de chalés e cabanas chave na mão.
-          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
-      </div>
-      <nav aria-label="Rodapé">
-        <a href="projetos.html">Projetos</a><br>
-        <a href="como-funciona.html">Como funciona</a><br>
-        <a href="investidores.html">Investidores</a><br>
+    <div class="envelope">
+      <p class="rodape__marca nome-espacado nome-espacado--centro" aria-hidden="true">Flausino</p>
+      <p class="rodape__assinatura">Projeto · Construção · Acabamento</p>
+      <nav class="rodape__links" aria-label="Rodapé">
+        <a href="projetos.html">Projetos</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="investidores.html">Investidores</a>
         <a href="sobre.html">Sobre</a>
-      </nav>
-      <div>
-        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a><br>
-        <a data-contato="instagram" href="#">@flausinoprojetos</a><br>
+        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a>
+        <a data-contato="instagram" href="#">@flausinoprojetos</a>
         <a data-contato="email" data-escrever="true" href="#"></a>
+      </nav>
+      <div class="rodape__nota">
+        <p>Flausino Projetos · Projeto e construção de chalés e cabanas chave na mão.
+          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
+        <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
+          estrutura, instalações e aprovação são desenvolvidos e assinados por
+          profissional habilitado, com adaptação obrigatória ao terreno.</p>
       </div>
-    </div>
-    <div class="envelope rodape__nota">
-      <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
-        estrutura, instalações e aprovação são desenvolvidos e assinados por
-        profissional habilitado, com adaptação obrigatória ao terreno.</p>
     </div>
   </footer>
 

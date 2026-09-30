@@ -42,7 +42,7 @@
               ' — chalé ' + escapar(p.tipologia) + ' da Flausino Projetos" loading="lazy">' +
           '</picture>' +
         '</span>' +
-        '<span class="card__nome">' + escapar(p.nome) + '</span>' +
+        '<span class="card__nome nome-espacado">' + escapar(p.nome) + '</span>' +
         '<span class="card__specs">' + specsDisponivel(p) + '</span>' +
         '<span class="card__preco">' + precoDoCard(p) + '</span>' +
       '</a>';
@@ -55,7 +55,7 @@
           '<img src="assets/img/marca/monograma.png" alt="" width="96" height="96">' +
         '</span>' +
         '<span class="card__etiqueta">Em desenvolvimento</span>' +
-        '<span class="card__nome">' + escapar(p.nome) + '</span>' +
+        '<span class="card__nome nome-espacado">' + escapar(p.nome) + '</span>' +
         '<span class="card__specs"><span>' + escapar(p.chamada) + '</span></span>' +
         '<a class="pill" data-whatsapp data-modelo="' + escapar(p.nome) + '" href="#">' +
           'Quero saber deste modelo</a>' +

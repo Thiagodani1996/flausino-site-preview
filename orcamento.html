@@ -27,7 +27,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/componentes.css">
@@ -37,7 +37,7 @@
 <body>
   <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="cabecalho">
+  <header class="cabecalho cabecalho--sobre-foto">
     <div class="envelope cabecalho__interno">
       <a class="cabecalho__marca" href="index.html" aria-label="Flausino Projetos — início">
         <span class="marca__nome">Flausino</span>
@@ -62,11 +62,20 @@
   </header>
 
   <main id="conteudo" tabindex="-1">
+    <section class="banner banner--baixo">
+      <picture class="banner__foto">
+        <source srcset="assets/img/horizonte/fundos.webp" type="image/webp">
+        <img src="assets/img/horizonte/fundos.jpg" width="1536" height="1024" fetchpriority="high" alt="">
+      </picture>
+      <div class="envelope banner__conteudo">
+        <p class="banner__nome nome-espacado" aria-hidden="true">Orçamento</p>
+        <h1 class="banner__titulo">Vamos falar sobre o seu chalé.</h1>
+      </div>
+    </section>
+
     <section class="secao">
       <div class="envelope">
-        <span class="rotulo">Solicitar orçamento</span>
-        <h1 class="titulo">Vamos falar sobre o seu chalé.</h1>
-        <p class="corpo">O caminho mais rápido é o WhatsApp — conversamos sobre modelo,
+        <p class="corpo corpo--destaque">O caminho mais rápido é o WhatsApp — conversamos sobre modelo,
           personalização, terreno e valores na mesma conversa. Se preferir, preencha
           o formulário e retornamos.</p>
         <div class="grupo-pills">
@@ -141,30 +150,25 @@
   </main>
 
   <footer class="rodape">
-    <div class="envelope rodape__grade">
-      <div>
-        <p class="cabecalho__marca" style="margin-bottom:var(--e-2)">
-          <span class="marca__nome">Flausino</span><span class="marca__sufixo">Projetos</span>
-        </p>
-        <p class="corpo">Projeto e construção de chalés e cabanas chave na mão.
-          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
-      </div>
-      <nav aria-label="Rodapé">
-        <a href="projetos.html">Projetos</a><br>
-        <a href="como-funciona.html">Como funciona</a><br>
-        <a href="investidores.html">Investidores</a><br>
+    <div class="envelope">
+      <p class="rodape__marca nome-espacado nome-espacado--centro" aria-hidden="true">Flausino</p>
+      <p class="rodape__assinatura">Projeto · Construção · Acabamento</p>
+      <nav class="rodape__links" aria-label="Rodapé">
+        <a href="projetos.html">Projetos</a>
+        <a href="como-funciona.html">Como funciona</a>
+        <a href="investidores.html">Investidores</a>
         <a href="sobre.html">Sobre</a>
-      </nav>
-      <div>
-        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a><br>
-        <a data-contato="instagram" href="#">@flausinoprojetos</a><br>
+        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a>
+        <a data-contato="instagram" href="#">@flausinoprojetos</a>
         <a data-contato="email" data-escrever="true" href="#"></a>
+      </nav>
+      <div class="rodape__nota">
+        <p>Flausino Projetos · Projeto e construção de chalés e cabanas chave na mão.
+          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
+        <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
+          estrutura, instalações e aprovação são desenvolvidos e assinados por
+          profissional habilitado, com adaptação obrigatória ao terreno.</p>
       </div>
-    </div>
-    <div class="envelope rodape__nota">
-      <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
-        estrutura, instalações e aprovação são desenvolvidos e assinados por
-        profissional habilitado, com adaptação obrigatória ao terreno.</p>
     </div>
   </footer>
 

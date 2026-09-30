@@ -51,7 +51,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&family=Playfair+Display:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/tokens.css">
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/componentes.css">
@@ -61,7 +61,7 @@
 <body>
   <a class="pular-para-conteudo" href="#conteudo">Pular para o conteúdo</a>
 
-  <header class="cabecalho">
+  <header class="cabecalho cabecalho--sobre-foto">
     <div class="envelope cabecalho__interno">
       <a class="cabecalho__marca" href="../index.html" aria-label="Flausino Projetos — início">
         <span class="marca__nome">Flausino</span>
@@ -86,29 +86,28 @@
   </header>
 
   <main id="conteudo" tabindex="-1">
+    <section class="banner">
+      <picture class="banner__foto">
+        <source srcset="../assets/img/[[SLUG]]/[[FOTO_CAPA]].webp" type="image/webp">
+        <img src="../assets/img/[[SLUG]]/[[FOTO_CAPA]].jpg" width="1800" height="1200" fetchpriority="high"
+             alt="Chalé [[TIPOLOGIA]] [[NOME]] ao entardecer, com deck de madeira e vista para as montanhas">
+      </picture>
+      <div class="envelope banner__conteudo">
+        <span class="rotulo">Modelo · [[TIPOLOGIA]]</span>
+        <h1 class="banner__nome nome-espacado">[[NOME]]</h1>
+        <!-- Se o modelo tiver mais de um quarto, escreva "quartos" em vez de "quarto". -->
+        <p class="banner__fatos"><span class="fato">[[AREA_INTERNA]] m²</span> · <span class="fato">[[QUARTOS]] quarto</span> · <span class="fato">deck [[AREA_DECK]] m²</span> · <span class="fato">A partir de [[PRECO]]</span></p>
+      </div>
+    </section>
+
     <section class="secao">
       <div class="envelope">
-        <span class="rotulo">Modelo · [[TIPOLOGIA]]</span>
-        <h1 class="titulo-display">[[NOME]]</h1>
-        <p class="corpo">[[CHAMADA]] [[AREA_INTERNA]] m² em dois pavimentos, deck frontal
+        <p class="corpo corpo--destaque">[[CHAMADA]] [[AREA_INTERNA]] m² em dois pavimentos, deck frontal
           de [[AREA_DECK]] m².</p>
       </div>
     </section>
 
-    <section class="galeria">
-      <figure class="galeria__principal">
-        <picture>
-          <source srcset="../assets/img/[[SLUG]]/[[FOTO_CAPA]].webp" type="image/webp">
-          <img id="galeria-principal" src="../assets/img/[[SLUG]]/[[FOTO_CAPA]].jpg"
-               width="1800" height="1200"
-               alt="Chalé [[TIPOLOGIA]] [[NOME]] ao entardecer, com deck de madeira e vista para as montanhas">
-        </picture>
-        <figcaption class="legenda-estudo">Estudo conceitual — Modelo [[NOME]]</figcaption>
-      </figure>
-      <div class="galeria__miniaturas" data-galeria role="list"></div>
-    </section>
-
-    <section class="secao secao--pergaminho">
+    <section class="secao secao--escura">
       <div class="envelope">
         <span class="rotulo">Ficha técnica</span>
         <h2 class="titulo">Medidas e áreas.</h2>
@@ -123,6 +122,15 @@
           <div><dt>Quartos</dt><dd>[[QUARTOS]]</dd></div>
           <div><dt>Banheiros</dt><dd>[[BANHEIROS]]</dd></div>
         </dl>
+      </div>
+    </section>
+
+    <section class="secao">
+      <div class="envelope">
+        <span class="rotulo">Galeria</span>
+        <h2 class="titulo">Cada ambiente.</h2>
+        <div class="galeria__grade" data-galeria></div>
+        <p class="legenda-estudo">Estudo conceitual — Modelo [[NOME]]</p>
       </div>
     </section>
 
@@ -210,7 +218,7 @@
     <section class="secao secao--escura">
       <div class="envelope centralizado">
         <span class="rotulo">Investimento</span>
-        <h2 class="titulo">A partir de <span data-contar>[[PRECO]]</span> — chave na mão.</h2>
+        <h2 class="titulo-display">A partir de <span data-contar>[[PRECO]]</span> — chave na mão.</h2>
         <p class="corpo">Valor de referência para o Modelo [[NOME]]. O orçamento final
           depende do terreno e das personalizações.</p>
         <div class="grupo-pills">
@@ -221,7 +229,7 @@
       </div>
     </section>
 
-    <section class="secao">
+    <section class="secao secao--nota">
       <div class="envelope">
         <p class="nota-tecnica">Projeto executivo, fundações, estrutura, instalações
           e aprovação legal são desenvolvidos e assinados por profissional habilitado.
@@ -231,30 +239,25 @@
   </main>
 
   <footer class="rodape">
-    <div class="envelope rodape__grade">
-      <div>
-        <p class="cabecalho__marca" style="margin-bottom:var(--e-2)">
-          <span class="marca__nome">Flausino</span><span class="marca__sufixo">Projetos</span>
-        </p>
-        <p class="corpo">Projeto e construção de chalés e cabanas chave na mão.
-          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
-      </div>
-      <nav aria-label="Rodapé">
-        <a href="../projetos.html">Projetos</a><br>
-        <a href="../como-funciona.html">Como funciona</a><br>
-        <a href="../investidores.html">Investidores</a><br>
+    <div class="envelope">
+      <p class="rodape__marca nome-espacado nome-espacado--centro" aria-hidden="true">Flausino</p>
+      <p class="rodape__assinatura">Projeto · Construção · Acabamento</p>
+      <nav class="rodape__links" aria-label="Rodapé">
+        <a href="../projetos.html">Projetos</a>
+        <a href="../como-funciona.html">Como funciona</a>
+        <a href="../investidores.html">Investidores</a>
         <a href="../sobre.html">Sobre</a>
-      </nav>
-      <div>
-        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a><br>
-        <a data-contato="instagram" href="#">@flausinoprojetos</a><br>
+        <a data-whatsapp data-origem="geral" href="#">WhatsApp</a>
+        <a data-contato="instagram" href="#">@flausinoprojetos</a>
         <a data-contato="email" data-escrever="true" href="#"></a>
+      </nav>
+      <div class="rodape__nota">
+        <p>Flausino Projetos · Projeto e construção de chalés e cabanas chave na mão.
+          Base em Vespasiano, Minas Gerais. Atendemos todo o Brasil.</p>
+        <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
+          estrutura, instalações e aprovação são desenvolvidos e assinados por
+          profissional habilitado, com adaptação obrigatória ao terreno.</p>
       </div>
-    </div>
-    <div class="envelope rodape__nota">
-      <p>As imagens de modelos são estudos conceituais. Projeto executivo, fundações,
-        estrutura, instalações e aprovação são desenvolvidos e assinados por
-        profissional habilitado, com adaptação obrigatória ao terreno.</p>
     </div>
   </footer>
 
@@ -272,28 +275,39 @@
       var modelo = PROJETOS.find(function (p) { return p.slug === 'mirante'; });
       if (!modelo) return;
 
-      var principal = document.getElementById('galeria-principal');
-      var trilho = document.querySelector('[data-galeria]');
-      // O <source webp> precisa trocar junto: só mexer no <img> não muda nada
-      // em navegador que suporta webp — ele continua servindo o srcset antigo.
-      var fonteWebp = document.querySelector('.galeria__principal source');
-      (modelo.galeria || []).forEach(function (item, indice) {
-        var botao = document.createElement('button');
-        botao.type = 'button';
-        botao.className = 'miniatura';
-        botao.setAttribute('role', 'listitem');
-        botao.setAttribute('aria-label', 'Ver imagem ' + (indice + 1) + ': ' + item.alt);
-        botao.innerHTML = '<img src="../' + escapar(item.arquivo) + '.jpg" alt="" loading="lazy">';
-        botao.addEventListener('click', function () {
-          if (fonteWebp) fonteWebp.srcset = '../' + item.arquivo + '.webp';
-          principal.src = '../' + item.arquivo + '.jpg';
-          principal.alt = item.alt;
-          trilho.querySelectorAll('.miniatura').forEach(function (b) {
-            b.setAttribute('aria-current', 'false');
-          });
-          botao.setAttribute('aria-current', 'true');
-        });
-        trilho.appendChild(botao);
+      // Galeria em linhas justificadas: todas as fotos do modelo menos a capa
+      // (que já é o banner do topo). A primeira foto fica sozinha na linha e as
+      // demais vão de duas em duas. Cada foto ocupa a largura proporcional ao
+      // seu formato (largura/altura), então as fotos de uma linha ficam da mesma
+      // altura e nenhuma é cortada. O formato real vem da própria foto, quando
+      // ela carrega; até lá vale 3:2.
+      var grade = document.querySelector('[data-galeria]');
+      var linha = null;
+      (modelo.galeria || []).filter(function (item) {
+        return item.arquivo !== modelo.capa;
+      }).forEach(function (item, i) {
+        if (i === 0 || i % 2 === 1) {
+          linha = document.createElement('div');
+          linha.className = 'galeria__linha';
+          grade.appendChild(linha);
+        }
+        var figura = document.createElement('figure');
+        figura.className = 'galeria__item';
+        figura.style.setProperty('--proporcao', '1.5');
+        figura.innerHTML =
+          '<picture>' +
+            '<source srcset="../' + escapar(item.arquivo) + '.webp" type="image/webp">' +
+            '<img src="../' + escapar(item.arquivo) + '.jpg" width="1800" height="1200" loading="lazy" alt="' + escapar(item.alt) + '">' +
+          '</picture>';
+        var img = figura.querySelector('img');
+        function medir() {
+          if (!img.naturalWidth || !img.naturalHeight) return;
+          figura.style.setProperty('--proporcao', String(img.naturalWidth / img.naturalHeight));
+          img.setAttribute('width', img.naturalWidth);
+          img.setAttribute('height', img.naturalHeight);
+        }
+        if (img.complete) medir(); else img.addEventListener('load', medir);
+        linha.appendChild(figura);
       });
 
       var lista = document.querySelector('.ambientes');

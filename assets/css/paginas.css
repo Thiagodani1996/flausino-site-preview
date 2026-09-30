@@ -86,37 +86,143 @@
 .com-js .hero__assinatura { animation: hero-surgir 1.6s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both; }
 @keyframes hero-surgir { from { opacity: 0; letter-spacing: 0.6em; } }
 
-/* Seção logo abaixo do hero, com o que saiu dele: frase, texto e botões. */
-.abertura .titulo-display { max-width: 20ch; margin-inline: auto; }
+/* --- Banner de página: a versão menor do hero ------------------------------
+   Toda página interna abre com uma foto grande e o cabeçalho transparente
+   por cima (cabecalho--sobre-foto). O texto fica embaixo, à esquerda, sobre
+   uma sombra que só escurece o alto (cabeçalho) e a base (texto). */
+.banner {
+  position: relative; overflow: hidden; display: flex; align-items: flex-end;
+  min-height: 72vh; min-height: 72svh;
+  color: var(--branco); background: var(--noite);
+}
+.banner--baixo { min-height: 52vh; min-height: 52svh; }
+.banner__foto { position: absolute; inset: 0; }
+.banner__foto img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--foco, 50% 50%);
+}
+/* O alto segue o do hero (céu quase limpo), mas o cabeçalho transparente tem
+   uma faixa fixa de 80px mais firme: ela não encolhe quando o banner é baixo,
+   e as letras do menu passam em 4,5:1 sobre as oito fotos (medido). */
+.banner::after {
+  content: ''; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom,
+    rgba(14, 18, 16, 0.60) 0,
+    rgba(14, 18, 16, 0.52) 80px,
+    rgba(14, 18, 16, 0.22) max(16%, 130px),
+    rgba(14, 18, 16, 0.00) 38%,
+    rgba(14, 18, 16, 0.60) 62%,
+    rgba(14, 18, 16, 0.85) 100%);
+}
+.banner__conteudo { position: relative; z-index: 2; padding-block: var(--e-15) var(--e-10); }
+.banner .rotulo { color: var(--branco); }
+.banner__nome { margin: 0; font-size: clamp(2.25rem, 6.4vw, 5.5rem); }
+.banner__titulo {
+  margin-top: var(--e-3); font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  line-height: 1.3; max-width: 30ch;
+}
+.banner__fatos {
+  margin-top: var(--e-4); font-size: var(--texto-legenda); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.3em;
+}
+.banner__fatos .fato { white-space: nowrap; }
+@media (max-width: 699px) {
+  .banner__nome { letter-spacing: 0.2em; }
+  .banner__conteudo { padding-block: var(--e-15) var(--e-8); }
+}
 
-.etapas { list-style: none; margin: var(--e-4) 0 0; padding: 0; display: grid; gap: 0; }
-.etapas li { padding-block: var(--e-3); border-top: var(--filete); }
-.etapas li span {
-  display: block; font-size: var(--texto-legenda); color: var(--terracota-texto);
-  letter-spacing: var(--espaco-caixa-alta); margin-bottom: var(--e-1);
+/* --- Home: abertura, título de seção e fechamento --------------------------- */
+.abertura .titulo-display, .fechamento .titulo-display { max-width: 20ch; margin-inline: auto; }
+.centralizado .grupo-pills { justify-content: center; margin-top: var(--e-6); }
+.titulo-secao { padding-bottom: var(--e-10); }
+
+/* --- Painel de modelo: foto em tela cheia com o nome espaçado ----------------
+   Tela em pé (celular): a foto aparece inteira (3:2) e o texto vem embaixo
+   sobre a noite. Tela deitada: a foto ocupa a tela e o texto vai por cima,
+   embaixo à esquerda, sobre a sombra. */
+.painel { position: relative; background: var(--noite); color: var(--branco); overflow: hidden; }
+.painel__foto img { width: 100%; height: auto; }
+.painel__conteudo { display: grid; gap: var(--e-4); padding: var(--e-6) var(--e-3) var(--e-10); }
+.painel__contagem {
+  font-family: var(--fonte-serif); font-size: 0.9375rem; letter-spacing: 0.3em;
+  margin-bottom: var(--e-2);
+}
+.painel .rotulo { color: var(--terracota-claro); }
+.painel__nome { font-size: clamp(2.25rem, 6vw, 5.25rem); margin: var(--e-1) 0 var(--e-3); }
+.painel__conteudo .link-seta { justify-self: start; }
+.painel__preco { font-family: var(--fonte-serif); font-size: 1.5rem; }
+@media (min-aspect-ratio: 1/1) and (min-width: 700px) {
+  .painel { min-height: 92vh; display: flex; align-items: flex-end; }
+  .painel__foto { position: absolute; inset: 0; }
+  .painel__foto img { height: 100%; object-fit: cover; object-position: var(--foco, 50% 50%); }
+  .painel::after {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background:
+      linear-gradient(to top, rgba(14, 18, 16, 0.85) 0%, rgba(14, 18, 16, 0.40) 38%, rgba(14, 18, 16, 0) 62%),
+      linear-gradient(to right, rgba(14, 18, 16, 0.35) 0%, rgba(14, 18, 16, 0) 55%);
+  }
+  .painel__conteudo {
+    position: relative; z-index: 2; width: 100%;
+    max-width: var(--largura-max); margin: 0 auto;
+    padding: 0 var(--e-3) var(--e-10);
+    grid-template-columns: 1fr auto; align-items: end; gap: var(--e-6);
+  }
+  .painel .rotulo { color: var(--branco); }
+}
+@media (max-width: 699px) { .painel__nome { letter-spacing: 0.2em; } }
+
+/* --- Dividido: texto na noite, foto ocupando metade da tela ------------------- */
+.dividido { display: grid; grid-template-columns: 1fr; background: var(--noite); color: var(--branco); }
+.dividido__texto { padding: var(--secao-y) var(--e-3); }
+.dividido .rotulo { color: var(--terracota-claro); }
+.dividido .corpo { color: var(--pergaminho); margin-bottom: var(--e-6); }
+.dividido__foto img { width: 100%; height: auto; }
+@media (min-width: 900px) {
+  .dividido { grid-template-columns: 1fr 1fr; min-height: 88vh; }
+  .dividido__texto {
+    display: flex; flex-direction: column; justify-content: center; align-items: flex-start;
+    padding: var(--e-15) var(--e-8) var(--e-15) max(var(--e-3), calc((100vw - var(--largura-max)) / 2 + var(--e-3)));
+  }
+  .dividido__foto { display: block; }
+  .dividido__foto img { height: 100%; object-fit: cover; }
+}
+
+/* --- Faixa com foto de fundo e texto centralizado ---------------------------- */
+.faixa-foto {
+  position: relative; overflow: hidden; display: grid; place-items: center; text-align: center;
+  min-height: 78vh; min-height: 78svh; color: var(--branco); background: var(--noite);
+}
+.faixa-foto__foto { position: absolute; inset: 0; }
+.faixa-foto__foto img { width: 100%; height: 100%; object-fit: cover; }
+.faixa-foto::after { content: ''; position: absolute; inset: 0; z-index: 1; background: rgba(14, 18, 16, 0.55); }
+.faixa-foto__conteudo { position: relative; z-index: 2; padding-block: var(--e-15); }
+.faixa-foto .rotulo { color: var(--branco); }
+.faixa-foto .titulo { max-width: 18ch; margin-inline: auto; }
+.faixa-foto .corpo { color: var(--branco); margin: var(--e-4) auto var(--e-6); }
+
+.etapas {
+  list-style: none; margin: var(--e-6) 0 0; padding: 0;
+  display: grid; gap: var(--e-4) var(--e-3); grid-template-columns: 1fr 1fr;
 }
 @media (min-width: 900px) { .etapas { grid-template-columns: repeat(4, 1fr); gap: var(--e-4); } }
-
-.ficha-resumo {
-  list-style: none; padding: 0; margin: var(--e-3) 0;
-  display: flex; flex-wrap: wrap; gap: var(--e-3);
-  font-size: var(--texto-rotulo); color: var(--cinza-texto);
+.etapas li { padding-top: var(--e-4); border-top: var(--filete); }
+.etapas__numero {
+  display: block; font-family: var(--fonte-serif); line-height: 1;
+  font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--terracota);
+  margin-bottom: var(--e-3);
 }
-/* Nos blocos de modelo da home a linha de preço vem logo antes do botão;
-   sem margem própria ela encostava na borda da pílula. */
-.ficha-resumo ~ .card__preco { margin: 0 0 var(--e-3); }
+.etapas .corpo { font-size: 1rem; }
+
 .legenda-estudo {
   margin-top: var(--e-1); font-size: var(--texto-legenda);
   text-transform: uppercase; letter-spacing: var(--espaco-caixa-alta);
   color: var(--cinza-texto);
 }
-/* Centralizado e maior: a 1440px ele ficava encostado à esquerda com metade
-   da tela vazia ao lado, o que lia como página inacabada. */
-.video-apresentacao { width: 100%; max-width: 1000px; margin: var(--e-3) auto 0; display: block; }
+/* Na largura toda do envelope, começando onde o título começa. */
+.video-apresentacao { width: 100%; max-width: 100%; margin: var(--e-3) 0 0; display: block; }
 .centralizado { text-align: center; }
 .centralizado .corpo { margin-left: auto; margin-right: auto; max-width: 64ch; }
 .centralizado .rotulo { text-align: center; }
-.centralizado .grupo-pills { justify-content: center; margin-top: var(--e-3); }
 
 /* --- Catálogo ----------------------------------------------------------- */
 .filtros {
@@ -137,40 +243,47 @@
   padding: 6px 0; min-width: 190px;
 }
 .filtros__contador { margin-left: auto; font-size: var(--texto-rotulo); color: var(--cinza-texto); }
-.catalogo { display: grid; gap: var(--e-4); grid-template-columns: 1fr; }
+.catalogo { display: grid; gap: var(--e-8) var(--e-4); margin-top: var(--e-6); grid-template-columns: 1fr; }
 @media (min-width: 640px) { .catalogo { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1000px) { .catalogo { grid-template-columns: repeat(3, 1fr); } }
 .catalogo__vazio { padding-block: var(--e-6); }
 .catalogo__vazio .pill { margin-top: var(--e-3); }
 
 /* --- Página de modelo --------------------------------------------------- */
-.galeria { padding-bottom: var(--secao-y); }
-.galeria__principal { margin: 0; }
-/* A foto principal cabe inteira na altura da tela, sem corte: a largura é
-   limitada pela altura disponível (tela menos cabeçalho e respiro) vezes a
-   proporção 3:2 das fotos de modelo. Antes ela ocupava a largura toda com
-   teto de 78vh e object-fit: cover, e perdia quase metade da altura. */
-.galeria__principal picture {
-  display: block; margin-inline: auto;
-  width: min(100%, calc((100vh - 150px) * 1.5));
-  width: min(100%, calc((100svh - 150px) * 1.5));
+/* Galeria em linhas justificadas: a primeira foto sozinha na linha, depois
+   duas por linha. Cada foto ocupa a largura proporcional ao seu formato
+   (--proporcao = largura/altura, posto pelo script da página), então as fotos de
+   uma linha ficam da mesma altura e nenhuma é cortada. No celular, uma por linha. */
+.galeria__grade { display: grid; gap: var(--e-2); margin-top: var(--e-6); }
+.galeria__linha { display: flex; flex-direction: column; gap: var(--e-2); }
+@media (min-width: 760px) {
+  .galeria__linha { flex-direction: row; }
+  .galeria__item { flex: var(--proporcao, 1.5) 1 0; }
+  /* Foto sozinha numa linha (depois da primeira): não passa da altura da
+     tela — sem isso um retrato sozinho ocupava a largura toda e ficava mais
+     alto que a janela. Fica centralizada. */
+  .galeria__linha:not(:first-child) > .galeria__item:only-child {
+    flex: 0 1 auto;
+    width: min(100%, calc((100vh - 160px) * var(--proporcao, 1.5)));
+    margin-inline: auto;
+  }
 }
-.galeria__principal img { width: 100%; height: auto; }
-.galeria__principal figcaption { max-width: var(--largura-max); margin: var(--e-1) auto 0; padding: 0 var(--e-3); }
-.galeria__miniaturas {
-  display: flex; gap: var(--e-1); overflow-x: auto;
-  max-width: var(--largura-max); margin: var(--e-2) auto 0; padding: 0 var(--e-3);
-}
-.miniatura { flex: 0 0 108px; padding: 0; border: 1.5px solid transparent; background: none; cursor: pointer; }
-.miniatura[aria-current="true"] { border-color: var(--terracota); }
-.miniatura img { width: 108px; height: 72px; object-fit: cover; }
+.galeria__item { margin: 0; min-width: 0; }
+.galeria__item img { width: 100%; height: auto; display: block; }
+.galeria__grade + .legenda-estudo { margin-top: var(--e-2); }
+/* Seção só com a nota técnica: uma linha, não precisa de uma seção inteira. */
+.secao--nota { padding-block: var(--e-6); }
 
-.ficha { display: grid; gap: 0; grid-template-columns: 1fr; margin-top: var(--e-4); }
-@media (min-width: 700px) { .ficha { grid-template-columns: repeat(3, 1fr); column-gap: var(--e-4); } }
-.ficha > div { display: flex; justify-content: space-between; gap: var(--e-2);
-  padding-block: var(--e-2); border-top: var(--filete); }
-.ficha dt { font-size: var(--texto-rotulo); color: var(--cinza-texto); margin: 0; }
-.ficha dd { margin: 0; font-weight: 600; }
+.ficha { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 var(--e-4); margin-top: var(--e-6); }
+@media (min-width: 900px) { .ficha { grid-template-columns: repeat(3, 1fr); } }
+.ficha > div { padding-block: var(--e-3) var(--e-4); border-top: var(--filete); }
+.secao--escura .ficha > div { border-top: var(--filete-escuro); }
+.ficha dt {
+  margin: 0 0 var(--e-1); font-size: var(--texto-legenda); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.3em; color: var(--cinza-texto);
+}
+.secao--escura .ficha dt { color: var(--terracota-claro); }
+.ficha dd { margin: 0; font-family: var(--fonte-serif); font-size: clamp(1.375rem, 2.6vw, 2.25rem); line-height: 1.15; }
 
 .planta { margin: var(--e-4) 0 0; }
 /* height: auto é necessário aqui: os atributos width/height do HTML (usados
@@ -187,25 +300,23 @@
 .secao--escura .lista-filete li { border-top: var(--filete-escuro); }
 
 .nota-tecnica { font-size: var(--texto-legenda); color: var(--cinza-texto); max-width: 76ch; }
+.secao--escura .nota-tecnica { color: var(--pergaminho); }
 .video-ambiente { width: 100%; margin-top: var(--e-3); aspect-ratio: 16 / 9; object-fit: cover; }
 
 /* --- Linha do tempo e pilares ------------------------------------------- */
-.linha-tempo { list-style: none; padding: 0; margin: 0; counter-reset: etapa; }
+/* Linha do tempo: numerais grandes, título e texto lado a lado no desktop. */
+.linha-tempo { list-style: none; padding: 0; margin: 0; }
 .linha-tempo li {
-  position: relative; padding: var(--e-4) 0 var(--e-4) var(--e-6);
-  border-top: var(--filete);
+  display: grid; gap: var(--e-2); grid-template-columns: 1fr;
+  padding-block: var(--e-6); border-top: var(--filete);
 }
-.linha-tempo li::before {
-  content: ''; position: absolute; left: 10px; top: var(--e-4); bottom: 0;
-  width: 1px; background: var(--cinza-pedra);
+@media (min-width: 800px) {
+  .linha-tempo li { grid-template-columns: 160px 1fr 1.2fr; gap: var(--e-6); align-items: start; }
+  .linha-tempo li .corpo { margin-top: 0; }
 }
-.linha-tempo li:last-child::before { display: none; }
 .linha-tempo__numero {
-  position: absolute; left: 0; top: var(--e-4);
-  width: 21px; height: 21px; border-radius: 50%;
-  border: 1.5px solid var(--terracota); background: var(--pergaminho);
-  display: grid; place-items: center;
-  font-size: 10px; color: var(--terracota-texto); letter-spacing: 0;
+  font-family: var(--fonte-serif); line-height: 1;
+  font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--terracota);
 }
 .pilares { display: grid; gap: var(--e-4); margin-top: var(--e-4); grid-template-columns: 1fr; }
 @media (min-width: 860px) { .pilares { grid-template-columns: repeat(3, 1fr); } }
@@ -214,7 +325,7 @@
 /* --- Simulador ---------------------------------------------------------- */
 .simulador { display: grid; gap: var(--e-6); margin-block: var(--e-4); grid-template-columns: 1fr; }
 @media (min-width: 900px) { .simulador { grid-template-columns: 1fr 1fr; gap: var(--e-8); } }
-.simulador__campos { display: grid; gap: var(--e-3); }
+.simulador__campos { display: grid; gap: var(--e-3); align-content: start; }
 .simulador__campos label {
   display: flex; flex-direction: column; gap: var(--e-1);
   font-size: var(--texto-legenda); text-transform: uppercase;
@@ -232,6 +343,11 @@
   display: block; font-family: var(--fonte-serif); font-size: var(--texto-titulo);
   font-weight: 500;
 }
+.simulador__saida strong { font-size: clamp(2rem, 3.4vw, 3rem); font-weight: 400; }
+.secao--escura .simulador__campos label { color: var(--pergaminho); }
+.secao--escura .simulador__campos input[type="number"] { color: var(--branco); border-bottom-color: var(--pergaminho); }
+.secao--escura .simulador__campos input[type="range"] { accent-color: var(--terracota-claro); }
+.secao--escura .simulador__saida > div { border-top: var(--filete-escuro); }
 
 /* --- Formulário --------------------------------------------------------- */
 .formulario { display: grid; gap: var(--e-3); grid-template-columns: 1fr; }

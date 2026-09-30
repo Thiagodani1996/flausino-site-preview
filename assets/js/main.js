@@ -46,7 +46,8 @@
     // Na home o cabeçalho fica transparente sobre a foto do hero e vira
     // sólido (branco) quando a foto sai de baixo dele ou o menu abre.
     var sobreFoto = cabecalho.classList.contains('cabecalho--sobre-foto');
-    var hero = document.querySelector('.hero');
+    // A home abre com o hero; as páginas internas, com um banner de foto.
+    var hero = document.querySelector('.hero, .banner');
     var menu = document.querySelector('.menu-movel');
     var aoRolar = function () {
       cabecalho.classList.toggle('cabecalho--compacto', window.scrollY > 80);
@@ -212,7 +213,7 @@
   // reduzido, a foto simplesmente está lá.
   function revelarFotos() {
     if (movimentoReduzido || !('IntersectionObserver' in window)) return;
-    var fotos = document.querySelectorAll('.duas-colunas picture, .galeria__principal picture');
+    var fotos = document.querySelectorAll('.duas-colunas picture, .dividido__foto, .galeria__item picture');
     if (!fotos.length) return;
     quandoVisivel(function () {
       // Observa o PAI da foto, não a foto: a foto começa recortada 100% pela
@@ -242,8 +243,8 @@
   // A foto inteira (moldura e imagem juntas) sobe um pouco mais devagar que o
   // texto ao lado enquanto a página rola. Mover a imagem DENTRO da moldura
   // exigia deixá-la ampliada para sobrar folga, e isso cortava ~20% de cada
-  // foto; movendo a moldura, a foto continua inteira. A galeria do topo das
-  // páginas de modelo fica de fora: ela encosta no título e nas miniaturas.
+  // foto; movendo a moldura, a foto continua inteira. A galeria das
+  // páginas de modelo fica de fora: as fotos dela já são grandes e inteiras.
   function parallax() {
     if (movimentoReduzido || telaPequena) return;
     var alvos = Array.prototype.slice.call(document.querySelectorAll('.duas-colunas picture'));
