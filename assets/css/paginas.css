@@ -439,6 +439,7 @@
      regra global de animacoes.css desliga a animação. */
   .com-js .hero__slide--ativo img,
   .com-js .hero__slide--saindo img { animation: hero-percorrer 7.5s ease-in-out both; }
+  .com-js .hero__nome, .com-js .hero__assinatura { animation-name: hero-surgir-celular; }
   .com-js .hero__slide:nth-child(even).hero__slide--ativo img,
   .com-js .hero__slide:nth-child(even).hero__slide--saindo img { animation-direction: reverse; }
 
@@ -458,6 +459,11 @@
 @media (max-width: 699px) {
   /* Percorre só o miolo da foto, onde está o chalé: indo de ponta a ponta,
      o começo e o fim do movimento mostravam só céu, telhado e mato. */
+  /* Entrada da marca no celular: só aparece, sem abrir o espaçamento das
+     letras. A entrada do computador começa com 0.6em entre as letras; aqui,
+     onde a frase usa 0.2em, isso a fazia quebrar em 2–3 linhas no primeiro
+     segundo e depois se juntar. Mesma duração e atraso do computador. */
+  @keyframes hero-surgir-celular { from { opacity: 0; } }
   @keyframes hero-percorrer {
     from { object-position: 22% 50%; }
     to   { object-position: 78% 50%; }
