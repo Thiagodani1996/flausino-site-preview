@@ -227,17 +227,16 @@
       var modelo = PROJETOS.find(function (p) { return p.slug === 'bosque'; });
       if (!modelo) return;
 
-      // Galeria em linhas justificadas: todas as fotos do modelo menos a capa
-      // (que já é o banner do topo). A primeira foto fica sozinha na linha e as
-      // demais vão de duas em duas. Cada foto ocupa a largura proporcional ao
-      // seu formato (largura/altura), então as fotos de uma linha ficam da mesma
-      // altura e nenhuma é cortada. O formato real vem da própria foto, quando
-      // ela carrega; até lá vale 3:2.
+      // Galeria em linhas justificadas: todas as fotos do modelo, começando
+      // pela foto de frente (a capa). Ela repete o banner do topo de propósito:
+      // lá divide espaço com o nome e os dados; aqui aparece limpa, sozinha na
+      // primeira linha. As demais vão de duas em duas. Cada foto ocupa a largura
+      // proporcional ao seu formato (largura/altura), então as fotos de uma
+      // linha ficam da mesma altura e nenhuma é cortada. O formato real vem da
+      // própria foto, quando ela carrega; até lá vale 3:2.
       var grade = document.querySelector('[data-galeria]');
       var linha = null;
-      (modelo.galeria || []).filter(function (item) {
-        return item.arquivo !== modelo.capa;
-      }).forEach(function (item, i) {
+      (modelo.galeria || []).forEach(function (item, i) {
         if (i === 0 || i % 2 === 1) {
           linha = document.createElement('div');
           linha.className = 'galeria__linha';
